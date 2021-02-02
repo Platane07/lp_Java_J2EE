@@ -27,16 +27,16 @@ public class Etudiant implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public Etudiant() {
-		super();
-		nbAbsences = 0;
-	}
-
 	@OneToMany(mappedBy = "etudiant", fetch = FetchType.LAZY)
 	private List<Note> notes;
 
 	public Integer getId() {
 		return this.id;
+	}
+
+	public Etudiant() {
+		super();
+		nbAbsences = 0;
 	}
 
 	public void setId(Integer id) {
