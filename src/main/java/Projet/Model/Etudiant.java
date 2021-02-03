@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Entity implementation class for Entity: Groupe
+ * Entity implementation class for Entity: Etudiant
  */
 @Entity
 public class Etudiant implements Serializable {

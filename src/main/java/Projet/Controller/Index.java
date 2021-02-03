@@ -20,6 +20,7 @@ public class Index extends HttpServlet {
     private String urlIndex;
     private String urlListeGroupes;
     private String urlGroupe;
+    private String urlEtudiant;
 
 
     // INIT
@@ -55,6 +56,10 @@ public class Index extends HttpServlet {
             doGroupe(request, response);
         }
 
+        if(action.equals("/etudiant")){
+            doEtudiant(request, response);
+        }
+
         // EtudiantDAO etudiant = new EtudiantDAO();
         //List<Etudiant> listEtudiants = new ArrayList<>();
 
@@ -66,7 +71,7 @@ public class Index extends HttpServlet {
     }
 
 
-    // /////////////////////// GROUPES
+    // /////////////////////// affichage de la liste des groupes
     //
     private void doListeGroupes(HttpServletRequest request,
                            HttpServletResponse response) throws ServletException, IOException {
@@ -79,7 +84,7 @@ public class Index extends HttpServlet {
         loadJSP(urlIndex, request, response);
     }
 
-    // /////////////////////// Etudiants dans groupes
+    // /////////////////////// affichage de la liste des étudiants et leurs notes dans un groupe
     //
     private void doGroupe(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
@@ -97,6 +102,18 @@ public class Index extends HttpServlet {
         request.setAttribute("groupe", groupe);
         request.setAttribute("etudiants", etudiants);
         request.setAttribute("content", urlGroupe);
+        loadJSP(urlIndex, request, response);
+    }
+
+    private void doEtudiant(HttpServletRequest request,
+                          HttpServletResponse response) throws ServletException, IOException {
+
+
+        Etudiant etudiant = EtudiantDAO.getById(Integer.parseInt(request.getParameter("id")));
+
+        // Inclusion du content dans le template
+        request.setAttribute("etudiants", etudiant);
+        request.setAttribute("content", urlEtudiant);
         loadJSP(urlIndex, request, response);
     }
 

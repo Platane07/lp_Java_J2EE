@@ -9,7 +9,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<script type='text/javascript'>
+    // Description des urls de demande ajax
+        const urlEditNote = "<%=application.getContextPath()%>/ajax/editNote";
+        const urlCreateNote = "<%=application.getContextPath()%>/ajax/createNote";
+</script>
+<script type='text/javascript' src="<%=application.getContextPath()%>/Public/javascript/edit.js"
+        charset="UTF-8">
+</script>
 <div class="container">
     <div class="row justify-content-center">
             <% Groupe groupe = (Groupe) request.getAttribute("groupe");%>
@@ -32,9 +39,9 @@
         <td><%= etu.getNom()%></td>
          <% for(Module module : groupe.getModules()){ %>
             <%if (etu.getNoteByModule(module) != null) {%>
-                <td><%=etu.getNoteByModule(module).getValeur()%></td>
+                <td id="<%=etu.getId()%><%=module.getId()%>" onClick="editNote(<%=etu.getId()%>,<%=module.getId()%>)"><%=etu.getNoteByModule(module).getValeur()%></td>
             <%} else {%>
-                <td></td>
+                <td id="<%=etu.getId()%><%=module.getId()%>" onClick="editNote(<%=etu.getId()%>,<%=module.getId()%>)"></td>
             <%}%>
         <%}%>
     </tr>

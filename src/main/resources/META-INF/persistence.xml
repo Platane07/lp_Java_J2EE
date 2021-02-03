@@ -34,4 +34,5 @@
 
         </properties>
     </persistence-unit>
+    <!-- Unité de persistence charger à la création de la factory - voir GestionFactory -->
 </persistence>
