@@ -13,6 +13,7 @@
     // Description des urls de demande ajax
         const urlEditNote = "<%=application.getContextPath()%>/ajax/editNote";
         const urlCreateNote = "<%=application.getContextPath()%>/ajax/createNote";
+        const urlDeleteNote = "<%=application.getContextPath()%>/ajax/deleteNote"
 </script>
 <script type='text/javascript' src="<%=application.getContextPath()%>/Public/javascript/edit.js"
         charset="UTF-8">

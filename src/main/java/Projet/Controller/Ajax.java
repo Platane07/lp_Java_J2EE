@@ -29,6 +29,9 @@ public class Ajax extends HttpServlet {
             if (action.equals("/createNote")) {
                 doCreateNote(request, response);
             }
+            if (action.equals("/deleteNote")){
+                doDeleteNote(request, response);
+            }
 
         } else {
 
@@ -45,7 +48,7 @@ public class Ajax extends HttpServlet {
         // Récupération d'une donnée envoyé par le client
         int idModule = Integer.parseInt(request.getParameter("idModule"));
         int idEtudiant = Integer.parseInt(request.getParameter("idEtudiant"));
-        int value = Integer.parseInt(request.getParameter("value"));
+        float value = Float.parseFloat(request.getParameter("value"));
 
         Note note = NoteDAO.getByEtudiantAndModule(idEtudiant, idModule);
         note.setValeur(value);
@@ -61,9 +64,24 @@ public class Ajax extends HttpServlet {
 
         int idModule = Integer.parseInt(request.getParameter("idModule"));
         int idEtudiant = Integer.parseInt(request.getParameter("idEtudiant"));
-        int value = Integer.parseInt(request.getParameter("value"));
+        float value = Float.parseFloat(request.getParameter("value"));
 
         NoteDAO.create(value, idEtudiant, idModule);
+        // Retourne le résultat sous forme JSON
+
+        // Retourne le résultat sous forme JSON
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("success");
+    }
+
+    private void doDeleteNote(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        int idModule = Integer.parseInt(request.getParameter("idModule"));
+        int idEtudiant = Integer.parseInt(request.getParameter("idEtudiant"));
+
+        NoteDAO.deleteById(idEtudiant, idModule);
         // Retourne le résultat sous forme JSON
 
         // Retourne le résultat sous forme JSON

@@ -30,6 +30,9 @@ public class Etudiant implements Serializable {
 	@OneToMany(mappedBy = "etudiant", fetch = FetchType.LAZY)
 	private List<Note> notes;
 
+	@OneToMany(mappedBy = "etudiant", fetch = FetchType.LAZY)
+	private List<Absence> absences;
+
 	public Integer getId() {
 		return this.id;
 	}
@@ -72,6 +75,19 @@ public class Etudiant implements Serializable {
 
 	public List<Note> getNotes() {
 		return this.notes;
+	}
+
+	public float getMoyenne(){
+		List<Note> notes = this.getNotes();
+
+		float moyenne = 0;
+		int ind = 0;
+
+		for(Note note : notes){
+			moyenne = moyenne + note.getValeur();
+			ind++;
+		}
+		return moyenne / ind;
 	}
 
 	public Note getNoteByModule(Module module){

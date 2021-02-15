@@ -11,6 +11,7 @@
         cell.innerHTML = '';
         let button = document.createElement("input");
         button.setAttribute("type", "button");
+        button.setAttribute('value', 'Valider');
         if (note == '') {
             button.setAttribute('onClick', 'createNote(' + idEtudiant + ',' + idModule +')');
         } else {
@@ -42,14 +43,17 @@
             },
             success: function (data) {
                 console.log("succès de la requête ajax");
+                cell.innerHTML = cell.children[0].value;
+                cell.setAttribute("onClick", 'editNote(' + idEtudiant + ',' + idModule +')');
             },
 
             error: function (error) {
                 console.log("erreur de la requête ajax");
+                cell.innerHTML = cell.children[0].value;
+                cell.setAttribute("onClick", 'editNote(' + idEtudiant + ',' + idModule +')');
             }
         })
-        cell.innerHTML = cell.children[0].value;
-        //cell.setAttribute("onClick", 'editNote(' + idEtudiant + ',' + idModule +')');
+
 
     }
 
@@ -71,13 +75,45 @@
                 console.log("succès de la requête ajax");
                 const note = cell.firstChild.getAttribute('value');
                 cell.innerHTML = note;
+                cell.innerHTML = cell.children[0].value;
+                cell.setAttribute("onClick", 'editNote(' + idEtudiant + ',' + idModule +')');
+            },
+
+            error: function (error) {
+                console.log("erreur de la requête ajax");
+                cell.innerHTML = cell.children[0].value;
+                cell.setAttribute("onClick", 'editNote(' + idEtudiant + ',' + idModule +')');
+            }
+        })
+
+      //  cell.setAttribute("onClick", 'editNote(' + idEtudiant + ',' + idModule +')');
+    }
+
+    function deleteNote(idEtudiant, idModule){
+        console.log("deleteNote");
+        const cell = document.getElementById(idEtudiant + '' + idModule);
+        cell.removeAttribute("onClick");
+
+        $.ajax({
+            url: urlDeleteNote,
+            type: 'post',
+            dataType: 'json',
+            data: {
+                idEtudiant : idEtudiant,
+                idModule : idModule,
+            },
+            success: function (data) {
+                console.log("succès de la requête ajax");
+                const note = cell.firstChild.getAttribute('value');
+                cell.innerHTML = note;
             },
 
             error: function (error) {
                 console.log("erreur de la requête ajax");
             }
         })
-
+        cell.innerHTML = '';
+        cell.setAttribute("onClick", 'editNote(' + idEtudiant + ',' + idModule +')');
     }
 
         //

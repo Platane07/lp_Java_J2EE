@@ -34,6 +34,10 @@
             <param-name>etudiant</param-name>
             <param-value>/WEB-INF/page/etudiant.jsp</param-value>
         </init-param>
+        <init-param>
+            <param-name>urlListeEtudiants</param-name>
+            <param-value>/WEB-INF/page/listeEtudiants.jsp</param-value>
+        </init-param>
     </servlet>
 
     <servlet>

@@ -9,7 +9,7 @@ import java.util.List;
 public class Note implements Serializable {
 
     @Column(nullable = false)
-    private int valeur;
+    private float valeur;
 
     @Id
     @ManyToOne
@@ -22,11 +22,11 @@ public class Note implements Serializable {
     private Module module;
 
 
-    public int getValeur() {
+    public float getValeur() {
         return valeur;
     }
 
-    public void setValeur(int valeur) {
+    public void setValeur(float valeur) {
         this.valeur = valeur;
     }
 

@@ -21,6 +21,7 @@ public class Index extends HttpServlet {
     private String urlListeGroupes;
     private String urlGroupe;
     private String urlEtudiant;
+    private String urlListeEtudiants;
 
 
     // INIT
@@ -28,8 +29,10 @@ public class Index extends HttpServlet {
         urlIndex = getServletConfig().getInitParameter("index");
         urlListeGroupes = getServletConfig().getInitParameter("urlListeGroupes");
         urlGroupe = getServletConfig().getInitParameter("urlGroupe");
-
+        urlListeEtudiants = getServletConfig().getInitParameter("urlListeEtudiants");
+        urlEtudiant = getServletConfig().getInitParameter("urlEtudiant");
         GestionFactory.open();
+
     }
 
     // POST
@@ -49,11 +52,15 @@ public class Index extends HttpServlet {
         }
 
 
-        if(action.equals("/listegroupes")){
+        if(action.equals("/listeGroupes")){
             doListeGroupes(request, response);
         }
         if(action.equals("/groupe")){
             doGroupe(request, response);
+        }
+
+        if(action.equals("/listeEtudiants")){
+            doListeEtudiants(request, response);
         }
 
         if(action.equals("/etudiant")){
@@ -114,6 +121,18 @@ public class Index extends HttpServlet {
         // Inclusion du content dans le template
         request.setAttribute("etudiants", etudiant);
         request.setAttribute("content", urlEtudiant);
+        loadJSP(urlIndex, request, response);
+    }
+
+    private void doListeEtudiants(HttpServletRequest request,
+                            HttpServletResponse response) throws ServletException, IOException {
+
+
+        List<Etudiant> etudiants = EtudiantDAO.getAll();
+
+        // Inclusion du content dans le template
+        request.setAttribute("etudiants", etudiants);
+        request.setAttribute("content", urlListeEtudiants);
         loadJSP(urlIndex, request, response);
     }
 

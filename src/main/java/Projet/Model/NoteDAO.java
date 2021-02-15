@@ -28,7 +28,7 @@ public class NoteDAO {
         return note;
     }
 
-    public static Note create(int value, int idEtudiant, int idModule) {
+    public static Note create(float value, int idEtudiant, int idModule) {
 
         // Creation de l'entity manager
         EntityManager em = GestionFactory.factory.createEntityManager();
@@ -52,6 +52,20 @@ public class NoteDAO {
         em.close();
 
         return note;
+    }
+
+    public static void deleteById(int idEtudiant, int idModule) {
+        // Creation de l'entity manager
+        EntityManager em = GestionFactory.factory.createEntityManager();
+
+        //
+        em.getTransaction().begin();
+        Note note = NoteDAO.getByEtudiantAndModule(idEtudiant, idModule);
+        em.remove(note);
+        em.getTransaction().commit();
+
+        em.close();
+
     }
 
     public static Note getByEtudiantAndModule(int idEtudiant, int idModule){
