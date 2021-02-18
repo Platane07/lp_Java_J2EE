@@ -9,7 +9,7 @@ import java.util.Date;
 public class Absence {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY )
     private Integer id;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP")

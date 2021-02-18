@@ -11,7 +11,7 @@ import java.util.List;
 public class Module implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY )
     private Integer id;
 
     @Column(unique = true, nullable = false)

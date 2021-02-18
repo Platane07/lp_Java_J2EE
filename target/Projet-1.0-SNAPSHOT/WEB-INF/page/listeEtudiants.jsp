@@ -30,7 +30,7 @@
         <td><%= etudiant.getNom()%></td>
         <td><a href="<%= application.getContextPath()%>/do/groupe?id=<%=etudiant.getGroupe().getId()%>"><%=etudiant.getGroupe().getNom()%></a></td>
         <td><%= etudiant.getMoyenne()%></td>
-        <td><%= application.getContextPath()%>/do/etudiant?id=<%=etudiant.getId()%></td>
+        <td><a href="<%= application.getContextPath()%>/do/etudiant?id=<%=etudiant.getId()%>">Détails</a></td>
     </tr>
     <a href="<%= application.getContextPath()%>/do/groupe"></a>
     <% } %>

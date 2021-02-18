@@ -8,7 +8,7 @@ import java.util.List;
 @Entity
 public class Note implements Serializable {
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private float valeur;
 
     @Id

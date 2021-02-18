@@ -15,7 +15,7 @@ public class Groupe implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY )
     private Integer id;
 
     @Column(unique = true, nullable = false)

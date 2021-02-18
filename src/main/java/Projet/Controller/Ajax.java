@@ -35,6 +35,7 @@ public class Ajax extends HttpServlet {
 
         } else {
 
+            log("allo");
             // Bad request
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
@@ -52,8 +53,8 @@ public class Ajax extends HttpServlet {
 
         Note note = NoteDAO.getByEtudiantAndModule(idEtudiant, idModule);
         note.setValeur(value);
-        NoteDAO.update(note);
-        log("coui");
+        Note noteUpdated = NoteDAO.update(note);
+
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write("success");
@@ -66,13 +67,15 @@ public class Ajax extends HttpServlet {
         int idEtudiant = Integer.parseInt(request.getParameter("idEtudiant"));
         float value = Float.parseFloat(request.getParameter("value"));
 
-        NoteDAO.create(value, idEtudiant, idModule);
+        Note note = NoteDAO.create(value, idEtudiant, idModule);
+
+        String json = new Gson().toJson(note);
         // Retourne le résultat sous forme JSON
 
         // Retourne le résultat sous forme JSON
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("success");
+        response.getWriter().write(json);
     }
 
     private void doDeleteNote(HttpServletRequest request, HttpServletResponse response)

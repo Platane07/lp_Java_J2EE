@@ -11,7 +11,7 @@ import java.util.List;
 public class Etudiant implements Serializable {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY )
 	private Integer id;
 
 	@Column(nullable = false)
@@ -25,13 +25,27 @@ public class Etudiant implements Serializable {
 	@ManyToOne
 	private Groupe groupe;
 
-	private static final long serialVersionUID = 1L;
+	@OneToMany(mappedBy = "etudiant" , cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Absence> absences;
 
 	@OneToMany(mappedBy = "etudiant", fetch = FetchType.LAZY)
 	private List<Note> notes;
 
-	@OneToMany(mappedBy = "etudiant", fetch = FetchType.LAZY)
-	private List<Absence> absences;
+	private static final long serialVersionUID = 1L;
+
+	public void setNotes(List<Note> notes) {
+		this.notes = notes;
+	}
+
+	public List<Absence> getAbsences() {
+		return absences;
+	}
+
+	public void setAbsences(List<Absence> absences) {
+		this.absences = absences;
+	}
+
+
 
 	public Integer getId() {
 		return this.id;

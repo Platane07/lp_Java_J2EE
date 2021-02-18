@@ -41,7 +41,7 @@
                     idModule: idModule,
                     value: cell.children[0].value,
                 },
-                success: function (data) {
+                success: function () {
                     console.log("succès de la requête ajax");
                     cell.innerHTML = cell.children[0].value;
                     cell.setAttribute("onClick", 'editNote(' + idEtudiant + ',' + idModule + ')');
@@ -74,7 +74,7 @@
                 idModule : idModule,
                 value: cell.children[0].value,
             },
-            success: function (data) {
+            success: function () {
                 console.log("succès de la requête ajax");
                 const note = cell.firstChild.getAttribute('value');
                 cell.innerHTML = note;
@@ -105,7 +105,7 @@
                 idEtudiant : idEtudiant,
                 idModule : idModule,
             },
-            success: function (data) {
+            success: function () {
                 console.log("succès de la requête ajax");
                 cell.innerHTML = '';
                 cell.setAttribute("onClick", 'editNote(' + idEtudiant + ',' + idModule +')');

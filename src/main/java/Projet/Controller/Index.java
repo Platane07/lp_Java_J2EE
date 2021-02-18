@@ -119,7 +119,7 @@ public class Index extends HttpServlet {
         Etudiant etudiant = EtudiantDAO.getById(Integer.parseInt(request.getParameter("id")));
 
         // Inclusion du content dans le template
-        request.setAttribute("etudiants", etudiant);
+        request.setAttribute("etudiant", etudiant);
         request.setAttribute("content", urlEtudiant);
         loadJSP(urlIndex, request, response);
     }

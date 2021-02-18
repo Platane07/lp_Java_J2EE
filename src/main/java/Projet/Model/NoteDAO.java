@@ -61,7 +61,8 @@ public class NoteDAO {
         //
         em.getTransaction().begin();
         Note note = NoteDAO.getByEtudiantAndModule(idEtudiant, idModule);
-        em.remove(note);
+        Note note2 = em.merge(note);
+        em.remove(note2);
         em.getTransaction().commit();
 
         em.close();
@@ -79,7 +80,6 @@ public class NoteDAO {
         Query q = em.createQuery("SELECT n FROM Note n WHERE n.etudiant = :etudiant AND n.module = :module", Note.class);
 
         Note note = (Note) q.setParameter("etudiant", etudiant).setParameter("module", module).getSingleResult();
-
         return note;
     }
 }
