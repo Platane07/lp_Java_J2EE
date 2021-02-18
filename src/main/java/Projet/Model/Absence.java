@@ -3,6 +3,7 @@ package Projet.Model;
 import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -13,10 +14,10 @@ public class Absence {
     private Integer id;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP")
-    private Date début;
+    private LocalDateTime début;
 
     @Column(nullable = true, columnDefinition = "TIMESTAMP")
-    private Date fin;
+    private LocalDateTime fin;
 
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean justifié;
@@ -40,19 +41,19 @@ public class Absence {
         this.justifié = justifié;
     }
 
-    public Date getFin() {
+    public LocalDateTime getFin() {
         return fin;
     }
 
-    public void setFin(Date fin) {
+    public void setFin(LocalDateTime fin) {
         this.fin = fin;
     }
 
-    public Date getDébut() {
+    public LocalDateTime getDébut() {
         return début;
     }
 
-    public void setDébut(Date début) {
+    public void setDébut(LocalDateTime début) {
         this.début = début;
     }
 

@@ -15,7 +15,7 @@
         const urlCreateNote = "<%=application.getContextPath()%>/ajax/createNote";
         const urlDeleteNote = "<%=application.getContextPath()%>/ajax/deleteNote"
 </script>
-<script type='text/javascript' src="<%=application.getContextPath()%>/Public/javascript/edit.js"
+<script type='text/javascript' src="<%=application.getContextPath()%>/Public/javascript/editNote.js"
         charset="UTF-8">
 </script>
 <div class="container">

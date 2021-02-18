@@ -14,7 +14,6 @@
         <param-value>/WEB-INF/commun/footer.jsp</param-value>
     </context-param>
 
-
     <servlet>
         <servlet-name>index</servlet-name>
         <servlet-class>Projet.Controller.Index</servlet-class>
@@ -40,20 +39,31 @@
         </init-param>
     </servlet>
 
-    <servlet>
-        <servlet-name>ajax</servlet-name>
-        <servlet-class>Projet.Controller.Ajax</servlet-class>
-    </servlet>
-    
     <servlet-mapping>
         <servlet-name>index</servlet-name>
         <url-pattern>/do/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ajax</servlet-name>
+        <servlet-class>Projet.Controller.Ajax</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>ajax</servlet-name>
         <url-pattern>/ajax/*</url-pattern>
     </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>absence</servlet-name>
+        <url-pattern>/absence/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>absence</servlet-name>
+        <servlet-class>Projet.Controller.AbsenceController</servlet-class>
+    </servlet>
+
 
 
 
