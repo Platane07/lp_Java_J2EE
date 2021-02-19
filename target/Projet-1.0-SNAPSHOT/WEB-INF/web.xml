@@ -57,11 +57,16 @@
     <servlet-mapping>
         <servlet-name>absence</servlet-name>
         <url-pattern>/absence/*</url-pattern>
+
     </servlet-mapping>
 
     <servlet>
         <servlet-name>absence</servlet-name>
         <servlet-class>Projet.Controller.AbsenceController</servlet-class>
+        <init-param>
+            <param-name>urlEtudiant</param-name>
+            <param-value>/WEB-INF/page/etudiant.jsp</param-value>
+        </init-param>
     </servlet>
 
 

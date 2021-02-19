@@ -13,10 +13,11 @@
 
 <script type='text/javascript'>
     // Description des urls de demande ajax
-    const urlUpdateAbsence = "<%=application.getContextPath()%>/ajax/updateAbsence";
-    const urlCreateAbsence = "<%=application.getContextPath()%>/ajax/createAbsence";
-    const urlDeleteAbsence = "<%=application.getContextPath()%>/ajax/deleteAbsence"
+    const urlUpdateAbsence = "<%=application.getContextPath()%>/absence/update";
+    const urlDeleteAbsence = "<%=application.getContextPath()%>/absence/delete"
 </script>
+<script type='text/javascript' src="<%=application.getContextPath()%>/Public/javascript/editAbsence.js"
+        charset="UTF-8"></script>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% Etudiant etudiant = (Etudiant) request.getAttribute("etudiant");%>
 <div class="container">
@@ -43,30 +44,31 @@
             </tr>
             </thead>
             <tbody>
-            <%  int ind= 1;
+            <%  int ind= 0;
                 for(Absence absence : absences) {%>
             <tr>
-                <th scope="row">1</th>
-                <td><%=absence.getDébut()%></td>
-                <td><%=absence.getFin()%></td>
-                <td>
+                <th scope="row">#</th>
+                <td class="cellDebut"><%=absence.getDébut()%></td>
+                <td class="cellFin"><%=absence.getFin()%></td>
+                <td class="cellJustifie">
                 <% if(absence.isJustifié()) { %>
                     oui
                 <% } else { %>
                     non
                 <% } %>
                 </td>
+                <td><button onClick="deleteAbsence(<%=absence.getId()%>, this, <%=ind%>)">supprimer</button><button onClick="updateAbsence(<%=absence.getId()%>, this)">Modifier</button></td>
             </tr>
-            <% } %>
+            <%ind++; } %>
             <tr>
                 <form method="post" action="<%= application.getContextPath()%>/absence/create">
                     <td><input type="datetime-local" name="dateDebut" placeholder="Date de début" required/></td>
                     <td><input type="datetime-local" name="dateFin" placeholder="Date de fin" required/></td>
-                    <td>Justifié : <input type="checkbox" name="justifie"/></td>
+                    <td><input type="checkbox" name="justifie" value="true"/></td>
                     <input type="hidden" name="idEtudiant" value="<%= etudiant.getId()%>"/>
-                    <td><input type="submit" value="Ajouter"></td>
+                    <td><input type="submit" value="Ajouter"/></td>
                 </form>
-            </tr>
+            </tr>java
             </tbody>
 
         </table>

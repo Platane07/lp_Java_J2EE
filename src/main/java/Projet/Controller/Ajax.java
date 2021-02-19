@@ -70,9 +70,6 @@ public class Ajax extends HttpServlet {
         Note note = NoteDAO.create(value, idEtudiant, idModule);
 
         String json = new Gson().toJson(note);
-        // Retourne le résultat sous forme JSON
-
-        // Retourne le résultat sous forme JSON
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);

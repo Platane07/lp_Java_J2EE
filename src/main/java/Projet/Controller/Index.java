@@ -66,6 +66,9 @@ public class Index extends HttpServlet {
         if(action.equals("/etudiant")){
             doEtudiant(request, response);
         }
+        if(action.equals("/admin")){
+            request.setAttribute("content",  );
+        }
 
         // EtudiantDAO etudiant = new EtudiantDAO();
         //List<Etudiant> listEtudiants = new ArrayList<>();

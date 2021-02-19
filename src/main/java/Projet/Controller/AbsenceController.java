@@ -1,5 +1,6 @@
 package Projet.Controller;
 
+import javax.mvc.View;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -30,8 +31,14 @@ public class AbsenceController extends HttpServlet {
             String action = request.getPathInfo();
 
             // Exécution action
+            if (action.equals("/update")) {
+                doUpdateAbsence(request, response);
+            }
             if (action.equals("/create")) {
                 doCreateAbsence(request, response);
+            }
+            if (action.equals("/delete")) {
+                doDeleteAbsence(request, response);
             }
            /* if (action.equals("/update")) {
                 doUpdateAbsence(request, response);
@@ -46,15 +53,67 @@ public class AbsenceController extends HttpServlet {
 
         LocalDateTime debut = LocalDateTime.parse(request.getParameter("dateDebut"));
         LocalDateTime fin = LocalDateTime.parse(request.getParameter("dateFin"));
-        Boolean justifie = Boolean.parseBoolean(request.getParameter("justifie"));
+        Boolean justifie = false;
+        if (request.getParameter("justifie") != null) {
+            if (request.getParameter("justifie").equals("true")) {
+                justifie = true;
+            } else {
+                justifie = false;
+            }
+        }
         int idEtudiant = Integer.parseInt(request.getParameter("idEtudiant"));
 
         Absence absence = AbsenceDAO.create(debut, fin, justifie, idEtudiant);
 
 
+        Etudiant etudiant = EtudiantDAO.getById(idEtudiant);
+        request.setAttribute("etudiant", etudiant);
+        request.setAttribute("content", "page/etudiant.jsp");
         ServletContext sc = getServletContext();
         System.out.println(sc.getContextPath());
-        response.sendRedirect("etudiant.jsp");
 
+        request.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+
+    }
+
+    private void doDeleteAbsence(HttpServletRequest request,
+                                 HttpServletResponse response) throws ServletException, IOException {
+        int idAbsence = Integer.parseInt(request.getParameter("idAbsence"));
+
+        AbsenceDAO.delete(idAbsence);
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("success");
+    }
+
+    private void doUpdateAbsence(HttpServletRequest request,
+                                 HttpServletResponse response) throws ServletException, IOException {
+        int idAbsence = Integer.parseInt(request.getParameter("idAbsence"));
+
+        LocalDateTime debut = LocalDateTime.parse(request.getParameter("debut"));
+        LocalDateTime fin = LocalDateTime.parse(request.getParameter("fin"));
+        log("allo"+request.getParameter("justifie"));
+        Boolean justifie = false;
+        if (request.getParameter("justifie") != null) {
+            if (request.getParameter("justifie").equals("true")) {
+                justifie = true;
+            } else {
+                justifie = false;
+            }
+        }
+
+        Absence absence = AbsenceDAO.getById(idAbsence);
+        absence.setDébut(debut);
+        absence.setFin(fin);
+        absence.setJustifié(justifie);
+
+        log("MAMADOU");
+
+        AbsenceDAO.update(absence);
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("success");
     }
 }
