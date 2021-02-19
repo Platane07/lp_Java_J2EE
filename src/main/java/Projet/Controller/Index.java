@@ -22,6 +22,7 @@ public class Index extends HttpServlet {
     private String urlGroupe;
     private String urlEtudiant;
     private String urlListeEtudiants;
+    private String urlAdmin;
 
 
     // INIT
@@ -31,6 +32,7 @@ public class Index extends HttpServlet {
         urlGroupe = getServletConfig().getInitParameter("urlGroupe");
         urlListeEtudiants = getServletConfig().getInitParameter("urlListeEtudiants");
         urlEtudiant = getServletConfig().getInitParameter("urlEtudiant");
+        urlAdmin = getServletConfig().getInitParameter("urlAdmin");
         GestionFactory.open();
 
     }
@@ -67,7 +69,8 @@ public class Index extends HttpServlet {
             doEtudiant(request, response);
         }
         if(action.equals("/admin")){
-            request.setAttribute("content",  );
+            request.setAttribute("content", urlAdmin );
+            loadJSP(urlIndex, request, response);
         }
 
         // EtudiantDAO etudiant = new EtudiantDAO();

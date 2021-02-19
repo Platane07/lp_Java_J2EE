@@ -20,7 +20,7 @@
                 <a class="nav-link" href="<%= application.getContextPath()%>/do/listeEtudiants">ETUDIANTS</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
+                <a class="nav-link" href="<%= application.getContextPath()%>/do/admin">ADMIN</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link disabled" href="#">Disabled</a>

@@ -2,7 +2,7 @@
 <%@ page import="Projet.Model.Groupe" %>
 <%@ page import="Projet.Model.Module" %>
 <%@ page import="Projet.Model.Absence" %>
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: jolan
@@ -14,11 +14,16 @@
 <script type='text/javascript'>
     // Description des urls de demande ajax
     const urlUpdateAbsence = "<%=application.getContextPath()%>/absence/update";
-    const urlDeleteAbsence = "<%=application.getContextPath()%>/absence/delete"
+    const urlDeleteAbsence = "<%=application.getContextPath()%>/absence/delete";
+    const urlEditNote = "<%=application.getContextPath()%>/ajax/editNote";
+    const urlCreateNote = "<%=application.getContextPath()%>/ajax/createNote";
+    const urlDeleteNote = "<%=application.getContextPath()%>/ajax/deleteNote"
 </script>
 <script type='text/javascript' src="<%=application.getContextPath()%>/Public/javascript/editAbsence.js"
         charset="UTF-8"></script>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<script type='text/javascript' src="<%=application.getContextPath()%>/Public/javascript/editNote.js"
+        charset="UTF-8"></script>
+
 <% Etudiant etudiant = (Etudiant) request.getAttribute("etudiant");%>
 <div class="container">
     <div class="row justify-content-center">
@@ -61,6 +66,7 @@
             </tr>
             <%ind++; } %>
             <tr>
+                <th scope="row">Nouveau :</th>
                 <form method="post" action="<%= application.getContextPath()%>/absence/create">
                     <td><input type="datetime-local" name="dateDebut" placeholder="Date de début" required/></td>
                     <td><input type="datetime-local" name="dateFin" placeholder="Date de fin" required/></td>
@@ -70,16 +76,26 @@
                 </form>
             </tr>java
             </tbody>
-
+        </table>
+        <table class="table table-striped table-dark">
+            <thead>
+            <tr>
+                <th scope="col">Module</th>
+                <th scope="col">Note</th>
+            </tr>
+            </thead>
+            <tbody>
+                <% Groupe groupe = etudiant.getGroupe();
+                for(Module module : etudiant.getGroupe().getModules()) {%>
+            <tr>
+                <td><%=module.getNom()%></td>
+                <%if (etudiant.getNoteByModule(module) != null) {%>
+                    <td id="<%=etudiant.getId()%><%=module.getId()%>" onClick="editNote(<%=etudiant.getId()%>,<%=module.getId()%>)"><%=etudiant.getNoteByModule(module).getValeur()%></td>
+                <%} else {%>
+                    <td id="<%=etudiant.getId()%><%=module.getId()%>" onClick="editNote(<%=etudiant.getId()%>,<%=module.getId()%>)"></td>
+                <%}%>
+            </tr>
+                <%} %>
         </table>
     </div>
 </div>
-
-<table class="table">
-    allloifopfidfiop
-    <thead>
-    <tr>
-        <th scope="col">Nom de l'étudiant</th>
-    </tr>
-    </thead>
-</table>

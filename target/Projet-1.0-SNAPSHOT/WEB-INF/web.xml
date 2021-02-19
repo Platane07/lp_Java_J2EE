@@ -37,6 +37,10 @@
             <param-name>urlListeEtudiants</param-name>
             <param-value>/WEB-INF/page/listeEtudiants.jsp</param-value>
         </init-param>
+        <init-param>
+            <param-name>urlAdmin</param-name>
+            <param-value>/WEB-INF/page/admin.jsp</param-value>
+        </init-param>
     </servlet>
 
     <servlet-mapping>
@@ -57,7 +61,6 @@
     <servlet-mapping>
         <servlet-name>absence</servlet-name>
         <url-pattern>/absence/*</url-pattern>
-
     </servlet-mapping>
 
     <servlet>
