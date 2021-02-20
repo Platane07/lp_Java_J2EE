@@ -4,7 +4,17 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+    <!-- Page d'accueil du site -->
+    <welcome-file-list>
+        <welcome-file>do</welcome-file>
+    </welcome-file-list>
 
+    <welcome-file-list>
+        <welcome-file> index.html</welcome-file>
+    </welcome-file-list>
+
+
+    <!-- Routes de navigation dans le site -->
     <context-param>
         <param-name>header</param-name>
         <param-value>/WEB-INF/commun/header.jsp</param-value>
@@ -48,6 +58,8 @@
         <url-pattern>/do/*</url-pattern>
     </servlet-mapping>
 
+    <!-- routes pour la gestion des notes des étudiants -->
+
     <servlet>
         <servlet-name>ajax</servlet-name>
         <servlet-class>Projet.Controller.Ajax</servlet-class>
@@ -58,6 +70,8 @@
         <url-pattern>/ajax/*</url-pattern>
     </servlet-mapping>
 
+    <!-- routes pour la gestion des absences -->
+
     <servlet-mapping>
         <servlet-name>absence</servlet-name>
         <url-pattern>/absence/*</url-pattern>
@@ -66,12 +80,9 @@
     <servlet>
         <servlet-name>absence</servlet-name>
         <servlet-class>Projet.Controller.AbsenceController</servlet-class>
-        <init-param>
-            <param-name>urlEtudiant</param-name>
-            <param-value>/WEB-INF/page/etudiant.jsp</param-value>
-        </init-param>
     </servlet>
 
+    <!-- route pour la gestion des modules -->
     <servlet-mapping>
         <servlet-name>module</servlet-name>
         <url-pattern>/module/*</url-pattern>
@@ -81,6 +92,8 @@
         <servlet-name>module</servlet-name>
         <servlet-class>Projet.Controller.ModuleController</servlet-class>
     </servlet>
+
+    <!-- Route pour la gestion des groupes -->
 
     <servlet-mapping>
         <servlet-name>groupe</servlet-name>
@@ -92,13 +105,20 @@
         <servlet-class>Projet.Controller.GroupeController</servlet-class>
     </servlet>
 
-    <welcome-file-list>
-        <welcome-file>do</welcome-file>
-    </welcome-file-list>
+    <!-- route pour la gestion des étudiants -->
 
-    <welcome-file-list>
-        <welcome-file> index.html</welcome-file >
-    </welcome-file-list>
+    <servlet-mapping>
+        <servlet-name>etudiant</servlet-name>
+        <url-pattern>/etudiant/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>etudiant</servlet-name>
+        <servlet-class>Projet.Controller.EtudiantController</servlet-class>
+    </servlet>
+
+
+    <!-- route catchant toutes les erreurs 404 -->
 
     <error-page>
         <error-code> 404</error-code>

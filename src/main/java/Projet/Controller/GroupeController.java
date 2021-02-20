@@ -30,6 +30,10 @@ public class GroupeController extends HttpServlet {
         if (action.equals("/create")) {
             doCreateGroupe(request, response);
         }
+        // Exécution action
+        if (action.equals("/delete")) {
+            doDeleteGroupe(request, response);
+        }
     }
 
     private void doCreateGroupe(HttpServletRequest request,
@@ -38,23 +42,35 @@ public class GroupeController extends HttpServlet {
         String nom = request.getParameter("nomGroupe");
         log(nom);
         String[] idModules = request.getParameterValues("modulesAdded");
-
-        if (idModules == null) {
-            log("nuuuuuuuulmll");
-        }
         List<Module> modules = new ArrayList<>();
-        for(String id : idModules){
-            modules.add(ModuleDAO.getById(Integer.parseInt(id)));
+        if (idModules != null) {
+            for (String id : idModules) {
+                modules.add(ModuleDAO.getById(Integer.parseInt(id)));
+            }
         }
 
         Groupe groupe = GroupeDAO.create(nom, modules);
 
-        request.setAttribute("content", getServletConfig().getInitParameter("inde"));
         ServletContext sc = getServletContext();
         System.out.println(sc.getContextPath());
 
         response.sendRedirect(request.getContextPath() + "/do/admin");
-        //request.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+
+    }
+
+    private void doDeleteGroupe(HttpServletRequest request,
+                                HttpServletResponse response) throws ServletException, IOException {
+
+        String id = request.getParameter("id");
+
+        log("delete");
+
+        Groupe groupe = GroupeDAO.delete(Integer.parseInt(id));
+
+        ServletContext sc = getServletContext();
+        System.out.println(sc.getContextPath());
+
+        response.sendRedirect(request.getContextPath() + "/do/admin");
 
     }
 

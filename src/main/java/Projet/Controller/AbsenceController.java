@@ -63,14 +63,10 @@ public class AbsenceController extends HttpServlet {
 
         Absence absence = AbsenceDAO.create(debut, fin, justifie, idEtudiant);
 
-
-        Etudiant etudiant = EtudiantDAO.getById(idEtudiant);
-        request.setAttribute("etudiant", etudiant);
-        request.setAttribute("content", "page/etudiant.jsp");
         ServletContext sc = getServletContext();
         System.out.println(sc.getContextPath());
 
-        request.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/do/etudiant?id="+idEtudiant);
 
     }
 

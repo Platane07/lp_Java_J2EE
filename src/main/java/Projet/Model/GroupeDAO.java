@@ -30,10 +30,6 @@ public class GroupeDAO {
 
         em.getTransaction().commit();
 
-
-
-
-
         // Close the entity manager
         em.close();
 
@@ -60,6 +56,26 @@ public class GroupeDAO {
 
         return deletedCount;
     }
+    public static Groupe delete(int id) {
+
+        // Creation de l'entity manager
+        EntityManager em = GestionFactory.factory.createEntityManager();
+        //
+        em.getTransaction().begin();
+
+        Groupe groupe = em.find(Groupe.class, id);
+        em.merge(groupe);
+        em.remove(groupe);
+
+        // Commit
+        em.getTransaction().commit();
+
+        // Close the entity manager
+        em.close();
+
+        return groupe;
+    }
+
 
 
     public static List<Groupe> getAll() {
@@ -68,7 +84,7 @@ public class GroupeDAO {
         EntityManager em = GestionFactory.factory.createEntityManager();
 
         // Recherche 
-        Query q = em.createQuery("SELECT g FROM Groupe g");
+        Query q = em.createQuery("SELECT g FROM Groupe g ORDER BY g.id DESC");
 
         @SuppressWarnings("unchecked")
         List<Groupe> listGroupe = q.getResultList();

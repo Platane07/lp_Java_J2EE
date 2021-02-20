@@ -11,6 +11,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type='text/javascript' src="<%=application.getContextPath()%>/Public/javascript/admin.js"
         charset="UTF-8"></script>
+<script type="text/javascript">
+    const urlDeleteGroupe = "<%=application.getContextPath()%>/groupe/delete";
+    const urlDeleteModule = "<%=application.getContextPath()%>/module/delete";
+    const urlDeleteEtudiant = "<%=application.getContextPath()%>/etudiant/delete";
+</script>
+
 <div class="container">
     <div class="row justify-content-center">
         <h1>Espace Administrateur</h1>
@@ -22,7 +28,7 @@
     List<Module> modules = (List<Module>) request.getAttribute("modules");%>
 <div class="container">
     <div class="row justify-content-center">
-    <table class="table table-striped table-dark">
+    <table class="table table-striped table-dark table-bordered">
 
             <h1>LISTE DES GROUPES </h1>
             <thead>
@@ -40,13 +46,23 @@
                 <th scope="row">#</th>
                 <td><%=groupe.getId()%></td>
                 <td><%=groupe.getNom()%></td>
-                <td>Modules</td>
-                <td><button onClick="deleteGroupe(<%=groupe.getId()%>, this, <%=ind%>)">supprimer</button></td>
+                <td><table class="table table-striped table-dark table-bordered">
+                    <% for(Module module : groupe.getModules()) { %>
+                    <tr>
+                        <td><%=module.getNom()%></td>
+                        <td><button onClick="deleteModuleOfGroupe(<%=module.getId()%>, <%=groupe.getId()%>, this)">supprimer</button></td>
+                    </tr>
+                    <% } %>
+                    <tr>
+                        <td><button onClick="addModuleInGroupe(<%=groupe.getId()%>, this)"></button></td>
+                    </tr>
+                </table></td>
+                <td><button onClick="deleteGroupe(<%=groupe.getId()%>, this)">supprimer</button></td>
             </tr>
         <%ind++; } %>
                 <th scope="row">Nouveau :</th>
                 <form method="post" name="addGroupe" action="<%= application.getContextPath()%>/groupe/create">
-                    <td><input type="text" name="nomGroupe" placeholder="Nom du groupe" required/></td>
+                    <td><input type="text" name="nomGroupe" placeholder="Nom du groupe" autocomplete="off" required/></td>
                     <td><select name="modules" multiple>
                         <% for(Module module: modules) {%>
                         <option value="<%=module.getId()%>" onClick="populateSelect(this)"><%= module.getNom()%></option>
@@ -71,7 +87,7 @@
         </tr>
         </thead>
         <tbody>
-        <%  int ind1=0;
+        <%
             for(Module module : modules) {%>
         <tr>
             <td><%=module.getId()%></td>
@@ -79,16 +95,18 @@
             <td>Groupes</td>
             <td><button onClick="deleteModule(<%=module.getId()%>, this, <%=ind%>)">supprimer</button></td>
         </tr>
-        <%ind1++; } %>
+        <% } %>
         <tr>
             <th scope="row">Nouveau :</th>
-            <form method="post" action="<%= application.getContextPath()%>/groupe/create">
-                <td><input type="text" name="nomModule" placeholder="Nom du module" required/></td>
+            <form method="post" action="<%= application.getContextPath()%>/module/create">
+                <td><input type="text" name="nomModule" placeholder="Nom du module" autocomplete="off" required/></td>
                 <td><select id="groupe" multiple>
                     <% for(Groupe groupe: groupes) {%>
                     <option value="<%=groupe.getId()%>" onClick="populateSelect(this)"><%=groupe.getNom()%></option>
                     <% } %>
-                </select></td>
+                </select>
+                    <select name="groupesAdded" multiple>
+                    </select></td></td>
                 <td><input type="submit" value="Ajouter"/></td>
             </form>
         </tr>
@@ -102,20 +120,34 @@
         <tr>
             <th scope="col">Id</th>
             <th scope="col">Nom</th>
+            <th scope="col">Prénom</th>
             <th scope="col">Modules</th>
             <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
-        <%  int ind2= 0;
+        <%
             for(Etudiant etudiant : etudiants) {%>
         <tr>
             <td><%=etudiant.getId()%></td>
             <td><%=etudiant.getNom()%></td>
-            <td>Quel Groupe ?</td>
-            <td><button onClick="deleteEtudiant(<%=etudiant.getId()%>, this, <%=ind%>)">supprimer</button></td>
+            <td><%=etudiant.getPrenom()%></td>
+            <td><%=etudiant.getGroupe().getNom()%></td>
+            <td><button onClick="deleteEtudiant(<%=etudiant.getId()%>, this)">supprimer</button></td>
         </tr>
-        <%ind2++; } %>
+        <% } %>
+        <tr>
+            <th scope="row">Nouveau :</th>
+            <form method="post" action="<%= application.getContextPath()%>/etudiant/create">
+                <td><input type="text" name="nom" placeholder="Nom de l'étudiant" required/></td>
+                <td><input type="text" name="prenom" placeholder="Prénom de l'étudiant" required/></td>
+                <td><select name="etudiantGroupe">
+                    <% for(Groupe groupe: groupes) {%>
+                    <option value="<%=groupe.getId()%>"><%=groupe.getNom()%></option>
+                    <% } %>
+                </select>
+                <td><input type="submit" value="Ajouter"/></td>
+            </form>
         </tbody>
     </table>
     </div>

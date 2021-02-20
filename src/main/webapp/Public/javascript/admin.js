@@ -30,3 +30,63 @@ function depopulateSelect(el){
     el.remove();
 
 }
+
+function deleteGroupe(id, el, url){
+        $.ajax({
+            url: urlDeleteGroupe,
+            type: 'post',
+            dataType: 'json',
+            data: {
+                id: id,
+            },
+            success: function () {
+                console.log("succès de la requête ajax");
+                el.parentElement.parentElement.remove();
+            },
+
+            error: function (error) {
+                console.log("erreur de la requête ajax");
+                el.parentElement.parentElement.remove();
+            }
+        })
+}
+
+function deleteModule(id, el){
+    $.ajax({
+        url: urlDeleteModule,
+        type: 'post',
+        dataType: 'json',
+        data: {
+            id: id,
+        },
+        success: function () {
+            console.log("succès de la requête ajax");
+            el.parentElement.parentElement.remove();
+        },
+
+        error: function (error) {
+            console.log("erreur de la requête ajax");
+            el.parentElement.parentElement.remove();
+        }
+    })
+}
+
+function deleteEtudiant(id, el){
+    $.ajax({
+        url: urlDeleteEtudiant,
+        type: 'post',
+        dataType: 'json',
+        data: {
+            id: id,
+        },
+        success: function () {
+            console.log("succès de la requête ajax");
+            el.parentElement.parentElement.remove();
+        },
+
+        error: function (error) {
+            console.log("erreur de la requête ajax");
+            el.parentElement.parentElement.remove();
+        }
+    })
+}

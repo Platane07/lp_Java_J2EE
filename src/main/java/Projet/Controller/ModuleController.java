@@ -32,11 +32,15 @@ public class ModuleController extends HttpServlet {
 
         // Exécution action
         if (action.equals("/create")) {
-            doCreateodule(request, response);
+            doCreateModule(request, response);
         }
+        if (action.equals("/delete")) {
+            doDeleteModule(request, response);
+        }
+
     }
 
-    private void doCreateodule(HttpServletRequest request,
+    private void doCreateModule(HttpServletRequest request,
                                 HttpServletResponse response) throws ServletException, IOException {
 
         String nom = request.getParameter("nomModule");
@@ -53,11 +57,23 @@ public class ModuleController extends HttpServlet {
 
         Module module = ModuleDAO.create(nom, groupes);
 
-        request.setAttribute("content", "page/admin.jsp");
+        response.sendRedirect(request.getContextPath() + "/do/admin");
+
+    }
+
+    private void doDeleteModule(HttpServletRequest request,
+                                HttpServletResponse response) throws ServletException, IOException {
+
+        String id = request.getParameter("id");
+
+        log("delete");
+
+        Module module = ModuleDAO.delete(Integer.parseInt(id));
+
         ServletContext sc = getServletContext();
         System.out.println(sc.getContextPath());
 
-        request.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/do/admin");
 
     }
 

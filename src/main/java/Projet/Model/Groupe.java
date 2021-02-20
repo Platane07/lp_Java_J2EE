@@ -21,7 +21,7 @@ public class Groupe implements Serializable {
     @Column(unique = true, nullable = false)
     private String nom;
 
-    @OneToMany(mappedBy = "groupe", fetch = FetchType.LAZY)    // LAZY = fetch when needed, EAGER = fetch immediately
+    @OneToMany(mappedBy = "groupe", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})    // LAZY = fetch when needed, EAGER = fetch immediately
     private List<Etudiant> etudiants;
 
     @ManyToMany(mappedBy = "groupes", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
