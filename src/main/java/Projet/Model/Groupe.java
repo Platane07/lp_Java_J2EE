@@ -65,6 +65,11 @@ public class Groupe implements Serializable {
 			module.getGroupes().add(this);
 	}
 
+	public void removeModule(Module module){
+        this.modules.remove(module);
+        module.getGroupes().remove(this);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -90,3 +90,24 @@ function deleteEtudiant(id, el){
         }
     })
 }
+
+function deleteModuleOfGroupe(idModule, idGroupe, el) {
+    $.ajax({
+        url: urlDeleteModuleOfGroupe,
+        type: 'post',
+        dataType: 'json',
+        data: {
+            idModule: idModule,
+            idGroupe: idGroupe,
+        },
+        success: function () {
+            console.log("succès de la requête ajax");
+            el.parentElement.parentElement.remove();
+        },
+
+        error: function (error) {
+            console.log("erreur de la requête ajax");
+            el.parentElement.parentElement.remove();
+        }
+    })
+}

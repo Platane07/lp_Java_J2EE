@@ -76,6 +76,24 @@ public class GroupeDAO {
         return groupe;
     }
 
+    public static void deleteModule(int idModule, int idGroupe){
+
+        EntityManager em = GestionFactory.factory.createEntityManager();
+        //
+        em.getTransaction().begin();
+
+        Module module = em.find(Module.class, idModule);
+        Groupe groupe = em.find(Groupe.class, idGroupe);
+        em.merge(groupe);
+        groupe.removeModule(module);
+
+        // Commit
+        em.getTransaction().commit();
+
+        // Close the entity manager
+        em.close();
+
+    }
 
 
     public static List<Groupe> getAll() {

@@ -15,6 +15,7 @@
     const urlDeleteGroupe = "<%=application.getContextPath()%>/groupe/delete";
     const urlDeleteModule = "<%=application.getContextPath()%>/module/delete";
     const urlDeleteEtudiant = "<%=application.getContextPath()%>/etudiant/delete";
+    const urlDeleteModuleOfGroupe = "<%=application.getContextPath()%>/groupe/deleteModuleOfGroupe";
 </script>
 
 <div class="container">
@@ -54,8 +55,17 @@
                     </tr>
                     <% } %>
                     <tr>
-                        <td><button onClick="addModuleInGroupe(<%=groupe.getId()%>, this)"></button></td>
+                        <td>
+                            <select name="module">
+                                <% for(Module module: modules) {%>
+                                <option value="<%=module.getId()%>"><%=module.getNom()%></option>
+                                <% } %>
+                            </select>
+                        </td>
+                            <td><input type="submit"/></td>
+                        </form>
                     </tr>
+
                 </table></td>
                 <td><button onClick="deleteGroupe(<%=groupe.getId()%>, this)">supprimer</button></td>
             </tr>
@@ -145,6 +155,7 @@
                     <option value="<%=groupe.getId()%>"><%=groupe.getNom()%></option>
                     <% } %>
                 </select>
+                </td>
                 <td><input type="submit" value="Ajouter"/></td>
             </form>
         </tbody>

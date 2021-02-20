@@ -34,6 +34,9 @@ public class GroupeController extends HttpServlet {
         if (action.equals("/delete")) {
             doDeleteGroupe(request, response);
         }
+        if (action.equals("/deleteModuleOfGroupe")) {
+            doDeleteModuleOfGroupe(request, response);
+        }
     }
 
     private void doCreateGroupe(HttpServletRequest request,
@@ -66,6 +69,23 @@ public class GroupeController extends HttpServlet {
         log("delete");
 
         Groupe groupe = GroupeDAO.delete(Integer.parseInt(id));
+
+        ServletContext sc = getServletContext();
+        System.out.println(sc.getContextPath());
+
+        response.sendRedirect(request.getContextPath() + "/do/admin");
+
+    }
+
+    private void doDeleteModuleOfGroupe(HttpServletRequest request,
+                                HttpServletResponse response) throws ServletException, IOException {
+
+        int idModule = Integer.parseInt(request.getParameter("idModule"));
+        int idGroupe = Integer.parseInt(request.getParameter("idGroupe"));
+
+        log("delete");
+
+        GroupeDAO.deleteModule(idModule, idGroupe);
 
         ServletContext sc = getServletContext();
         System.out.println(sc.getContextPath());
