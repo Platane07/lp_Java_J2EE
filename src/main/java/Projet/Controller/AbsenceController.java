@@ -53,12 +53,10 @@ public class AbsenceController extends HttpServlet {
 
         LocalDateTime debut = LocalDateTime.parse(request.getParameter("dateDebut"));
         LocalDateTime fin = LocalDateTime.parse(request.getParameter("dateFin"));
-        Boolean justifie = false;
+        boolean justifie = false;
         if (request.getParameter("justifie") != null) {
             if (request.getParameter("justifie").equals("true")) {
                 justifie = true;
-            } else {
-                justifie = false;
             }
         }
         int idEtudiant = Integer.parseInt(request.getParameter("idEtudiant"));
@@ -94,12 +92,10 @@ public class AbsenceController extends HttpServlet {
         LocalDateTime debut = LocalDateTime.parse(request.getParameter("debut"));
         LocalDateTime fin = LocalDateTime.parse(request.getParameter("fin"));
         log("allo"+request.getParameter("justifie"));
-        Boolean justifie = false;
+        boolean justifie = false;
         if (request.getParameter("justifie") != null) {
             if (request.getParameter("justifie").equals("true")) {
                 justifie = true;
-            } else {
-                justifie = false;
             }
         }
 
@@ -107,8 +103,6 @@ public class AbsenceController extends HttpServlet {
         absence.setDébut(debut);
         absence.setFin(fin);
         absence.setJustifié(justifie);
-
-        log("MAMADOU");
 
         AbsenceDAO.update(absence);
 

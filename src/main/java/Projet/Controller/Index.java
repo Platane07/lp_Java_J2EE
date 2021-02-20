@@ -53,6 +53,9 @@ public class Index extends HttpServlet {
             action = "/";
         }
 
+        if (action.equals("/admin")){
+            doAdmin(request, response);
+        }
 
         if(action.equals("/listeGroupes")){
             doListeGroupes(request, response);
@@ -67,10 +70,6 @@ public class Index extends HttpServlet {
 
         if(action.equals("/etudiant")){
             doEtudiant(request, response);
-        }
-        if(action.equals("/admin")){
-            request.setAttribute("content", urlAdmin );
-            loadJSP(urlIndex, request, response);
         }
 
         // EtudiantDAO etudiant = new EtudiantDAO();
@@ -118,6 +117,7 @@ public class Index extends HttpServlet {
         loadJSP(urlIndex, request, response);
     }
 
+
     private void doEtudiant(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
@@ -130,6 +130,9 @@ public class Index extends HttpServlet {
         loadJSP(urlIndex, request, response);
     }
 
+
+
+    // Affichage de la page de la liste des étudiants
     private void doListeEtudiants(HttpServletRequest request,
                             HttpServletResponse response) throws ServletException, IOException {
 
@@ -139,6 +142,22 @@ public class Index extends HttpServlet {
         // Inclusion du content dans le template
         request.setAttribute("etudiants", etudiants);
         request.setAttribute("content", urlListeEtudiants);
+        loadJSP(urlIndex, request, response);
+    }
+
+    private void doAdmin(HttpServletRequest request,
+                                  HttpServletResponse response) throws ServletException, IOException {
+
+
+        List<Etudiant> etudiants = EtudiantDAO.getAll();
+        List<Groupe> groupes = GroupeDAO.getAll();
+        List<Module> modules = ModuleDAO.getAll();
+
+        // Inclusion du content dans le template
+        request.setAttribute("etudiants", etudiants);
+        request.setAttribute("groupes", groupes);
+        request.setAttribute("modules", modules);
+        request.setAttribute("content", urlAdmin);
         loadJSP(urlIndex, request, response);
     }
 

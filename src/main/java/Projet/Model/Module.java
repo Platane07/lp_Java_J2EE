@@ -22,10 +22,10 @@ public class Module implements Serializable {
             joinColumns = @JoinColumn(name = "module_id"),
             inverseJoinColumns = @JoinColumn(name = "groupe_id")
     )
-    private List<Groupe> groupes = new ArrayList<>();
+    private final List<Groupe> groupes = new ArrayList<>();
 
     @OneToMany(mappedBy = "module", fetch = FetchType.LAZY)
-    private List<Note> notes = new ArrayList<>();
+    private final List<Note> notes = new ArrayList<>();
 
 
     public Integer getId() {
@@ -49,8 +49,8 @@ public class Module implements Serializable {
     }
 
     public void addGroupe(Groupe groupe) {
-        groupes.add(groupe);
-        //groupe.getModules().add(this);
+        this.groupes.add(groupe);
+        groupe.getModules().add(this);
     }
 
     @Override

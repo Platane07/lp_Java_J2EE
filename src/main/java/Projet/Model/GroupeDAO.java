@@ -7,7 +7,7 @@ import java.util.List;
 
 public class GroupeDAO {
 
-    public static Groupe create(String nom) {
+    public static Groupe create(String nom, List<Module> modules) {
 
         // Creation de l'entity manager
         EntityManager em = GestionFactory.factory.createEntityManager();
@@ -18,14 +18,21 @@ public class GroupeDAO {
         // create new groupe
         Groupe groupe = new Groupe();
         groupe.setNom(nom);
+
         em.persist(groupe);
 
-        // On peut maintenant accéder au champ id de l'objet créé
-        // (champ autoincrémenté)
-        int id = groupe.getId();
+        for(Module module : modules){
+            groupe.addModule(module);
+        }
 
-        // Commit
+        em.merge(groupe);
+
+
         em.getTransaction().commit();
+
+
+
+
 
         // Close the entity manager
         em.close();

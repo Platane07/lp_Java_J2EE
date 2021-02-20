@@ -55,13 +55,7 @@
                 <th scope="row">#</th>
                 <td class="cellDebut"><%=absence.getDébut()%></td>
                 <td class="cellFin"><%=absence.getFin()%></td>
-                <td class="cellJustifie">
-                <% if(absence.isJustifié()) { %>
-                    oui
-                <% } else { %>
-                    non
-                <% } %>
-                </td>
+                <td class="cellJustifie"><% if(absence.isJustifié()) { %>oui<% } else { %>non<% } %></td>
                 <td><button onClick="deleteAbsence(<%=absence.getId()%>, this, <%=ind%>)">supprimer</button><button onClick="updateAbsence(<%=absence.getId()%>, this)">Modifier</button></td>
             </tr>
             <%ind++; } %>
@@ -74,7 +68,7 @@
                     <input type="hidden" name="idEtudiant" value="<%= etudiant.getId()%>"/>
                     <td><input type="submit" value="Ajouter"/></td>
                 </form>
-            </tr>java
+            </tr>
             </tbody>
         </table>
         <table class="table table-striped table-dark">

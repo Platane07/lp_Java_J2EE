@@ -36,13 +36,18 @@ function deleteAbsence(idAbsence, el, ind) {
         var debut = cellDebut.innerHTML;
         var fin = cellFin.innerHTML;
         var justifie = cellJustifie.innerHTML;
+        console.log(justifie);
 
 
         cellDebut.innerHTML = "<input type=\"datetime-local\" placeholder=\"Date de début\"/>";
         cellDebut.firstChild.value = debut;
         cellFin.innerHTML = "<input type=\"datetime-local\" placeholder=\"Date de fin\"/>";
         cellFin.firstChild.value = fin;
-        cellJustifie.innerHTML = "<input type=\"checkbox\" value=\"true\"/>";
+        if (justifie === "oui" ) {
+            cellJustifie.innerHTML = "<input type=\"checkbox\" value=\"true\" checked/>";
+        } else {
+            cellJustifie.innerHTML = "<input type=\"checkbox\" value=\"true\"/>";
+        }
         console.log("1");
 
         el.setAttribute("onClick", "validerAbsence(" + idAbsence + ",this)");
@@ -52,7 +57,7 @@ function deleteAbsence(idAbsence, el, ind) {
 
     }
 
-    function validerAbsence(idAbsence, el) {
+function validerAbsence(idAbsence, el) {
         console.log("2");
 
         var row = el.parentNode.parentNode;
@@ -62,7 +67,8 @@ function deleteAbsence(idAbsence, el, ind) {
         var cellFin = row.cells[2].firstChild;
         console.log(cellFin);
         var cellJustifie = row.cells[3].firstChild;
-        console.log(cellJustifie);
+        console.log("justifie.value");
+        console.log(cellJustifie.value);
 
         $.ajax({
             url: urlUpdateAbsence,
@@ -71,7 +77,7 @@ function deleteAbsence(idAbsence, el, ind) {
             data: {
                 debut: cellDebut.value,
                 fin: cellFin.value,
-                justifie: cellJustifie.value,
+                justifie: cellJustifie.checked === true ? "true" : "false",
                 idAbsence: idAbsence,
             },
             success: function () {
@@ -79,7 +85,7 @@ function deleteAbsence(idAbsence, el, ind) {
                 cellDebut.parentNode.innerHTML = cellDebut.value;
                 console.log(cellDebut.value);
                 cellFin.parentNode.innerHTML = cellFin.value;
-                cellDebut.parentNode.innerHTML = cellJustifie.value;
+                cellDebut.parentNode.innerHTML = cellJustifie.value === "true" ? "oui" : "non";
                 el.setAttribute("onClick", "updateAbsence(" + idAbsence + ",this)");
                 el.innerHTML = "Modifier";
             },
@@ -89,10 +95,11 @@ function deleteAbsence(idAbsence, el, ind) {
                 cellDebut.parentNode.innerHTML = cellDebut.value;
                 console.log(cellDebut.value);
                 cellFin.parentNode.innerHTML = cellFin.value;
-                if(cellJustifie.value === undefined) {
-                    cellJustifie.parentNode.innerHTML = "non";
-                } else {
+                console.log(cellJustifie.parentNode);
+                if(cellJustifie.checked === true) {
                     cellJustifie.parentNode.innerHTML = "oui";
+                } else {
+                    cellJustifie.parentNode.innerHTML = "non";
                 }
                 console.log("4");
                 el.setAttribute("onClick", "updateAbsence(" + idAbsence + ",this)");

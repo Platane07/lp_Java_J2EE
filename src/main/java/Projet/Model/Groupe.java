@@ -25,7 +25,7 @@ public class Groupe implements Serializable {
     private List<Etudiant> etudiants;
 
     @ManyToMany(mappedBy = "groupes", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Module> modules = new ArrayList<>();
+    private final List<Module> modules = new ArrayList<>();
 
     public Groupe() {
         super();
@@ -56,11 +56,13 @@ public class Groupe implements Serializable {
 		return modules;
 	}
 
-	public void addModule(Module module) {
-		if (!modules.contains(module)) {
-			modules.add(module);
-			module.addGroupe(this);
-		}
+    public void setEtudiants(List<Etudiant> etudiants) {
+        this.etudiants = etudiants;
+    }
+
+    public void addModule(Module module) {
+			this.modules.add(module);
+			module.getGroupes().add(this);
 	}
 
     @Override
