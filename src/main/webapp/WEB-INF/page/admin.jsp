@@ -22,7 +22,7 @@
     }
 
 </style>
-
+<!-- PETIT MENU PROPRE A L ADMIN QUI VIENT SE RAJOUTER À LA NAVBAR DE L'INDEX -->
 <script type='text/javascript' src="<%=application.getContextPath()%>/Public/javascript/admin.js"
         charset="UTF-8"></script>
 

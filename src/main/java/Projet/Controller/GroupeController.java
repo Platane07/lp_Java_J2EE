@@ -32,7 +32,7 @@ public class GroupeController extends HttpServlet {
         if (action.equals("/create")) {
             doCreateGroupe(request, response);
         }
-        // Exécution action
+        //On différencie visuellement les requêtes passant par ajax à l'aide de la fonction isXMLHttpRequest (ajout d'une sécurité en plus)
         if (action.equals("/delete") && isXMLHttpRequest(request)) {
             doDeleteGroupe(request, response);
         }
@@ -75,9 +75,10 @@ public class GroupeController extends HttpServlet {
         }
 
     }
-
+    //Suppression d'un groupe entier à l'aide d'ajax
     private void doDeleteGroupe(HttpServletRequest request,
                                 HttpServletResponse response) throws ServletException, IOException {
+
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -94,8 +95,10 @@ public class GroupeController extends HttpServlet {
 
     }
 
+    //Suppression d'un etudiant dans un groupe à l'aide d'ajax
     private void doDeleteEtudiant(HttpServletRequest request,
                                 HttpServletResponse response) throws ServletException, IOException {
+
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -134,6 +137,7 @@ public class GroupeController extends HttpServlet {
                                         HttpServletResponse response) throws ServletException, IOException {
 
 
+        //Ajout d'un module dans un groupe
         try {
             if (request.getParameter("module") != null) {
                 int idModule = Integer.parseInt(request.getParameter("module"));
@@ -149,6 +153,8 @@ public class GroupeController extends HttpServlet {
 
     }
 
+    //Ajoute un étudiant dans un groupe,
+    //Données récupérées : id d'un étudiant et d'un groupe
     private void doAddEtudiant(HttpServletRequest request,
                              HttpServletResponse response) throws ServletException, IOException {
 

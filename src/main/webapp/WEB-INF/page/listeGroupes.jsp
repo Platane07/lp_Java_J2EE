@@ -15,6 +15,8 @@
     </div>
 </div>
 
+
+<!-- Table qui affiche tous les groupes présents dans la base de données -->
 <div class="container">
     <div class="row justify-content-center">
         <table class="table table-bordered">

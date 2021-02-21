@@ -25,7 +25,7 @@
         charset="UTF-8"></script>
 
 
-
+<!-- AFFICHAGE DES DETAILS DE L ETUDIANT -->
 
 <% Etudiant etudiant = (Etudiant) request.getAttribute("etudiant");%>
 <div class="container">
