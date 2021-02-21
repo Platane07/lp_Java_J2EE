@@ -11,9 +11,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type='text/javascript'>
     // Description des urls de demande ajax
-        const urlEditNote = "<%=application.getContextPath()%>/ajax/editNote";
-        const urlCreateNote = "<%=application.getContextPath()%>/ajax/createNote";
-        const urlDeleteNote = "<%=application.getContextPath()%>/ajax/deleteNote"
+        const urlEditNote = "<%=application.getContextPath()%>/note/editNote";
+        const urlCreateNote = "<%=application.getContextPath()%>/note/createNote";
+        const urlDeleteNote = "<%=application.getContextPath()%>/note/deleteNote"
 </script>
 <script type='text/javascript' src="<%=application.getContextPath()%>/Public/javascript/editNote.js"
         charset="UTF-8">
@@ -24,28 +24,32 @@
         <h1>GROUPE : <%= groupe.getNom()%></h1>
     </div>
 </div>
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">Nom de l'étudiant</th>
-        <% for(Module module : groupe.getModules()){%>
-        <th scope="col"><%=module.getNom()%></th>
-        <%}%>
-    </tr>
-    </thead>
-    <tbody>
-    <% List<Etudiant> etudiants = (List<Etudiant>) request.getAttribute("etudiants");
-        for(Etudiant etu : etudiants){%>
-    <tr>
-        <td><%= etu.getNom()%></td>
-         <% for(Module module : groupe.getModules()){ %>
-            <%if (etu.getNoteByModule(module) != null) {%>
-                <td id="<%=etu.getId()%><%=module.getId()%>" onClick="editNote(<%=etu.getId()%>,<%=module.getId()%>)"><%=etu.getNoteByModule(module).getValeur()%></td>
-            <%} else {%>
-                <td id="<%=etu.getId()%><%=module.getId()%>" onClick="editNote(<%=etu.getId()%>,<%=module.getId()%>)"></td>
-            <%}%>
-        <%}%>
-    </tr>
-    <% } %>
-    </tbody>
-</table>
+<div class="container">
+    <div class="row justify-content-center">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Nom de l'étudiant</th>
+                <% for(Module module : groupe.getModules()){%>
+                <th scope="col"><%=module.getNom()%></th>
+                <%}%>
+            </tr>
+            </thead>
+            <tbody>
+            <% List<Etudiant> etudiants = (List<Etudiant>) request.getAttribute("etudiants");
+                for(Etudiant etu : etudiants){%>
+            <tr>
+                <td><%= etu.getNom()%></td>
+                 <% for(Module module : groupe.getModules()){ %>
+                    <%if (etu.getNoteByModule(module) != null) {%>
+                        <td id="<%=etu.getId()%><%=module.getId()%>" onClick="editNote(<%=etu.getId()%>,<%=module.getId()%>)"><%=etu.getNoteByModule(module).getValeur()%></td>
+                    <%} else {%>
+                        <td id="<%=etu.getId()%><%=module.getId()%>" onClick="editNote(<%=etu.getId()%>,<%=module.getId()%>)"></td>
+                    <%}%>
+                <%}%>
+            </tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>

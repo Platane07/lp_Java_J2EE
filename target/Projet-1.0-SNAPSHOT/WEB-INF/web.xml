@@ -93,13 +93,13 @@
     <!-- routes pour la gestion des notes des étudiants -->
 
     <servlet>
-        <servlet-name>ajax</servlet-name>
-        <servlet-class>Projet.Controller.Ajax</servlet-class>
+        <servlet-name>note</servlet-name>
+        <servlet-class>Projet.Controller.NoteController</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>ajax</servlet-name>
-        <url-pattern>/ajax/*</url-pattern>
+        <servlet-name>note</servlet-name>
+        <url-pattern>/note/*</url-pattern>
     </servlet-mapping>
 
     <!-- routes pour la gestion des absences -->

@@ -15,21 +15,27 @@
     </div>
 </div>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">Nom du groupe</th>
-        <th scope="col">Nombre d'élèves</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% List<Groupe> listeGroupe = (List<Groupe>) request.getAttribute("groupes");
-        for(Groupe groupe : listeGroupe){%>
-    <tr>
-        <td><%= groupe.getNom()%></td>
-        <td><a href="<%= application.getContextPath()%>/do/groupe?id=<%=groupe.getId()%>">Voir les étudiants</a></td>
-    </tr>
-<a href="<%= application.getContextPath()%>/do/groupe"></a>
-    <% } %>
-    </tbody>
-</table>
+<div class="container">
+    <div class="row justify-content-center">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Nom du groupe</th>
+                    <th scope="col">Nombre d'élèves</th>
+                    <th scope="col">Fiche</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% List<Groupe> listeGroupe = (List<Groupe>) request.getAttribute("groupes");
+                    for(Groupe groupe : listeGroupe){%>
+                <tr>
+                    <td><%= groupe.getNom()%></td>
+                    <td><%= groupe.getEtudiants().size()%></td>
+                    <td><a href="<%= application.getContextPath()%>/do/groupe?id=<%=groupe.getId()%>">Voir les étudiants</a></td>
+                </tr>
+            <a href="<%= application.getContextPath()%>/do/groupe"></a>
+                <% } %>
+                </tbody>
+        </table>
+    </div>
+</div>

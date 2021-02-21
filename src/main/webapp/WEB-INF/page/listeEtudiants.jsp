@@ -14,25 +14,36 @@
         <h1>TOUS LES ETUDIANTS</h1>
     </div>
 </div>
-
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">Nom de l'élève</th>
-        <th scope="col">Groupe</th>
-        <th scope="col">Moyenne générale</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% List<Etudiant> listeEtudiants = (List<Etudiant>) request.getAttribute("etudiants");
-        for(Etudiant etudiant : listeEtudiants){%>
-    <tr>
-        <td><%= etudiant.getNom()%></td>
-        <td><a href="<%= application.getContextPath()%>/do/groupe?id=<%=etudiant.getGroupe().getId()%>"><%=etudiant.getGroupe().getNom()%></a></td>
-        <td><%= etudiant.getMoyenne()%></td>
-        <td><a href="<%= application.getContextPath()%>/do/etudiant?id=<%=etudiant.getId()%>">Détails</a></td>
-    </tr>
-    <a href="<%= application.getContextPath()%>/do/groupe"></a>
-    <% } %>
-    </tbody>
-</table>
+</br>
+<div class="container">
+    <div class="row justify-content-center">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Nom de l'élève</th>
+                <th scope="col">Groupe</th>
+                <th scope="col">Moyenne générale</th>
+                <th scope="col">Nombre d'absences</th>
+                <th scope="col">Fiche</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% List<Etudiant> listeEtudiants = (List<Etudiant>) request.getAttribute("etudiants");
+                for(Etudiant etudiant : listeEtudiants){%>
+            <tr>
+                <td><%= etudiant.getNom()%></td>
+                <td>
+                    <% if (etudiant.getGroupe() != null) { %>
+                    <a href="<%= application.getContextPath()%>/do/groupe?id=<%=etudiant.getGroupe().getId()%>"><%=etudiant.getGroupe().getNom()%></a>
+                    <%  } %>
+                </td>
+                <td><%= etudiant.getMoyenne()%></td>
+                <td><%= etudiant.getAbsences().size()%></td>
+                <td><a href="<%= application.getContextPath()%>/do/etudiant?id=<%=etudiant.getId()%>"><button type="button" class="btn btn-primary">Détails</button></a></td>
+            </tr>
+            <a href="<%= application.getContextPath()%>/do/groupe"></a>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
