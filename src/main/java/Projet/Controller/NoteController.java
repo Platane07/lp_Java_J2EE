@@ -35,7 +35,6 @@ public class NoteController extends HttpServlet {
 
         } else {
 
-            log("allo");
             // Bad request
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
@@ -46,48 +45,62 @@ public class NoteController extends HttpServlet {
     private void doEditNote(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Récupération d'une donnée envoyé par le client
-        int idModule = Integer.parseInt(request.getParameter("idModule"));
-        int idEtudiant = Integer.parseInt(request.getParameter("idEtudiant"));
-        float value = Float.parseFloat(request.getParameter("value"));
-
-        Note note = NoteDAO.getByEtudiantAndModule(idEtudiant, idModule);
-        note.setValeur(value);
-        Note noteUpdated = NoteDAO.update(note);
-
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("success");
+        try {
+            // Récupération d'une donnée envoyé par le client
+            int idModule = Integer.parseInt(request.getParameter("idModule"));
+            int idEtudiant = Integer.parseInt(request.getParameter("idEtudiant"));
+            float value = Float.parseFloat(request.getParameter("value"));
+
+            if(value <= 20 && value >= 0) {
+                Note note = NoteDAO.getByEtudiantAndModule(idEtudiant, idModule);
+                note.setValeur(value);
+                NoteDAO.update(note);
+                response.getWriter().write(new Gson().toJson("{ value : " + value + "}"));
+            }
+
+        } catch(Exception e) {
+            log("erreur lors de la modification de la note");
+            response.getWriter().write("erreur");
+        }
     }
 
     private void doCreateNote(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int idModule = Integer.parseInt(request.getParameter("idModule"));
-        int idEtudiant = Integer.parseInt(request.getParameter("idEtudiant"));
-        float value = Float.parseFloat(request.getParameter("value"));
+        try {
+            int idModule = Integer.parseInt(request.getParameter("idModule"));
+            int idEtudiant = Integer.parseInt(request.getParameter("idEtudiant"));
+            float value = Float.parseFloat(request.getParameter("value"));
 
-        Note note = NoteDAO.create(value, idEtudiant, idModule);
-
-        String json = new Gson().toJson(note);
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(json);
+            if(value <= 20 && value >= 0) {
+                Note note = NoteDAO.create(value, idEtudiant, idModule);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(new Gson().toJson("{ value : " + value + "}"));
+            }
+        } catch (Exception e) {
+            log("erreur lors de la création de la note");
+            response.getWriter().write("erreur");
+        }
     }
 
     private void doDeleteNote(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int idModule = Integer.parseInt(request.getParameter("idModule"));
-        int idEtudiant = Integer.parseInt(request.getParameter("idEtudiant"));
+        try {
 
-        NoteDAO.deleteById(idEtudiant, idModule);
-        // Retourne le résultat sous forme JSON
+            int idModule = Integer.parseInt(request.getParameter("idModule"));
+            int idEtudiant = Integer.parseInt(request.getParameter("idEtudiant"));
 
-        // Retourne le résultat sous forme JSON
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("success");
+            NoteDAO.deleteById(idEtudiant, idModule);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(new Gson().toJson("{ value : success }"));
+        } catch (Exception e ) {
+            log("erreur lors de la suppression de la note");
+        }
     }
 
 

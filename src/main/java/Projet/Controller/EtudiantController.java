@@ -17,6 +17,7 @@ import java.util.*;
 
 import Projet.Model.*;
 import Projet.Model.Module;
+import com.google.gson.Gson;
 import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 public class EtudiantController extends HttpServlet {
@@ -39,10 +40,9 @@ public class EtudiantController extends HttpServlet {
     private void doCreateEtudiant(HttpServletRequest request,
                                 HttpServletResponse response) throws ServletException, IOException {
 
-        String nom = request.getParameter("nom");
-        String prenom = request.getParameter("prenom");
-
         try {
+            String nom = request.getParameter("nom");
+            String prenom = request.getParameter("prenom");
             if (request.getParameter("etudiantGroupe") != null) {
                 int idGroupe = Integer.parseInt(request.getParameter("etudiantGroupe"));
                 Groupe groupe = GroupeDAO.getById(idGroupe);
@@ -50,32 +50,26 @@ public class EtudiantController extends HttpServlet {
             } else {
                 Etudiant etudiant = EtudiantDAO.create(nom, prenom, null);
             }
-
+            response.sendRedirect(request.getContextPath() + "/admin/etudiant");
         } catch (Exception e) {
             log("impossible de créer un étudiant");
+            response.sendRedirect(request.getContextPath() + "/admin/etudiant");
         }
-
-        response.sendRedirect(request.getContextPath() + "/admin/etudiant");
-
     }
 
     private void doDeleteEtudiant(HttpServletRequest request,
                                 HttpServletResponse response) throws ServletException, IOException {
 
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
         try {
-
             int id = Integer.parseInt(request.getParameter("id"));
-
             EtudiantDAO.delete(id);
-
-            ServletContext sc = getServletContext();
-            System.out.println(sc.getContextPath());
+            response.getWriter().write(new Gson().toJson("{AbsenceUpdated : " + id + "}"));
         } catch (Exception e) {
             log("impossible de supprimer un étudiant");
+            response.getWriter().write("erreur");
         }
-
-        response.sendRedirect(request.getContextPath() + "/admin/etudiant");
-
     }
 
     private boolean isXMLHttpRequest(HttpServletRequest request) {

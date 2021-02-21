@@ -15,9 +15,6 @@ function deleteAbsence(idAbsence, el, ind) {
 
         error: function (error) {
            console.log("erreur de la requête, l'absence n'a pas pu être supprimée");
-           /* el.parentElement.parentElement.remove();
-            ind = 0;*/
-
         }
     })
 }
@@ -86,7 +83,7 @@ function validerAbsence(idAbsence, el) {
                 cellDebut.parentNode.innerHTML = cellDebut.value;
                 console.log(cellDebut.value);
                 cellFin.parentNode.innerHTML = cellFin.value;
-                cellJustifie.parentNode.innerHTML = cellJustifie.value === "true" ? "oui" : "non";
+                cellJustifie.parentNode.innerHTML = cellJustifie.checked === "true" ? "oui" : "non";
                 el.setAttribute("onClick", "updateAbsence(" + idAbsence + ",this)");
                 el.innerHTML = "Modifier";
             },

@@ -41,12 +41,6 @@ public class AbsenceController extends HttpServlet {
         if (action.equals("/delete")) {
             doDeleteAbsence(request, response);
         }
-           /* if (action.equals("/update")) {
-                doUpdateAbsence(request, response);
-            }
-            if (action.equals("/delete")){
-                doDeleteAbsence(request, response);
-            }*/
     }
 
     private void doCreateAbsence(HttpServletRequest request,
@@ -84,17 +78,19 @@ public class AbsenceController extends HttpServlet {
 
     private void doDeleteAbsence(HttpServletRequest request,
                                  HttpServletResponse response) throws ServletException, IOException {
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
         try {
-            int idAbsence = tryParse(request.getParameter("idAbsence"));
-            AbsenceDAO.delete(idAbsence);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(new Gson().toJson("{idAbsence : "+idAbsence+"}"));
+            if(tryParse(request.getParameter("idAbsence")) != null) {
+                int idAbsence = Integer.parseInt(request.getParameter("idAbsence"));
+                AbsenceDAO.delete(idAbsence);
+
+                response.getWriter().write(new Gson().toJson("{idAbsence : " + idAbsence + "}"));
+            }
         } catch (Exception e) {
             response.getWriter().write("error");
         }
-
-
 
     }
 
@@ -132,7 +128,6 @@ public class AbsenceController extends HttpServlet {
                 }
             }
         }
-
 
     }
 

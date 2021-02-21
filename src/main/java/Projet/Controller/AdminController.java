@@ -62,7 +62,7 @@ public class AdminController extends HttpServlet {
         if(action.equals("/module")){
             doModule(request, response);
         }
-        this.getServletContext().getRequestDispatcher("/WEB-INF/page/admin.jsp").forward( request, response );
+
     }
 
     // /////////////////////// affichage de l'espace de gestion des groupes

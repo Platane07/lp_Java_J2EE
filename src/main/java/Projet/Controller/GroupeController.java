@@ -17,6 +17,7 @@ import java.util.*;
 
 import Projet.Model.*;
 import Projet.Model.Module;
+import com.google.gson.Gson;
 import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 public class GroupeController extends HttpServlet {
@@ -32,13 +33,13 @@ public class GroupeController extends HttpServlet {
             doCreateGroupe(request, response);
         }
         // Exécution action
-        if (action.equals("/delete")) {
+        if (action.equals("/delete") && isXMLHttpRequest(request)) {
             doDeleteGroupe(request, response);
         }
-        if (action.equals("/deleteModule")) {
+        if (action.equals("/deleteModule") && isXMLHttpRequest(request)) {
             doDeleteModule(request, response);
         }
-        if (action.equals("/deleteEtudiant")) {
+        if (action.equals("/deleteEtudiant") && isXMLHttpRequest(request)) {
             doDeleteEtudiant(request, response);
         }
         if (action.equals("/addModule")) {
@@ -51,69 +52,80 @@ public class GroupeController extends HttpServlet {
 
     private void doCreateGroupe(HttpServletRequest request,
                                  HttpServletResponse response) throws ServletException, IOException {
+        
+        try {
+            if (request.getParameter("nomGroupe") != null) {
+                String nom = request.getParameter("nomGroupe");
+                String[] idModules = request.getParameterValues("modulesAdded");
+                List<Module> modules = new ArrayList<>();
+                if (idModules != null) {
+                    for (String id : idModules) {
+                        modules.add(ModuleDAO.getById(Integer.parseInt(id)));
+                    }
+                }
+                GroupeDAO.create(nom, modules);
+                ServletContext sc = getServletContext();
+                System.out.println(sc.getContextPath());
 
-        String nom = request.getParameter("nomGroupe");
-        log(nom);
-        String[] idModules = request.getParameterValues("modulesAdded");
-        List<Module> modules = new ArrayList<>();
-        if (idModules != null) {
-            for (String id : idModules) {
-                modules.add(ModuleDAO.getById(Integer.parseInt(id)));
+                response.sendRedirect(request.getContextPath() + "/admin/groupe");
             }
+        } catch (Exception e) {
+            log("erreur lors de la création d'un groupe");
+            response.sendRedirect(request.getContextPath() + "/admin/groupe");
         }
-
-        Groupe groupe = GroupeDAO.create(nom, modules);
-
-        ServletContext sc = getServletContext();
-        System.out.println(sc.getContextPath());
-
-        response.sendRedirect(request.getContextPath() + "/admin/groupe");
 
     }
 
     private void doDeleteGroupe(HttpServletRequest request,
                                 HttpServletResponse response) throws ServletException, IOException {
 
-        String id = request.getParameter("id");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
 
-        log("delete");
+        try {
+            String id = request.getParameter("id");
+            GroupeDAO.delete(Integer.parseInt(id));
+            response.getWriter().write(new Gson().toJson("{ id : " + id + "}"));
+        } catch(Exception e) {
+            log("erreur lors de la suppression du groupe");
+            response.getWriter().write("error");
 
-        Groupe groupe = GroupeDAO.delete(Integer.parseInt(id));
-
-        ServletContext sc = getServletContext();
-        System.out.println(sc.getContextPath());
-
-        response.sendRedirect(request.getContextPath() + "/admin/groupe");
+        }
 
     }
 
     private void doDeleteEtudiant(HttpServletRequest request,
                                 HttpServletResponse response) throws ServletException, IOException {
 
-        int idEtudiant = Integer.parseInt(request.getParameter("idEtudiant"));
-        int idGroupe = Integer.parseInt(request.getParameter("idGroupe"));
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
 
-        log("delete");
-
-        GroupeDAO.deleteEtudiant(idEtudiant, idGroupe);
-
-        log("ca pase");
-
-        response.sendRedirect(request.getContextPath() + "/admin/groupe");
+        try {
+            int idEtudiant = Integer.parseInt(request.getParameter("idEtudiant"));
+            int idGroupe = Integer.parseInt(request.getParameter("idGroupe"));
+            GroupeDAO.deleteEtudiant(idEtudiant, idGroupe);
+            response.getWriter().write(new Gson().toJson("{ id : " + idEtudiant + "}"));
+        } catch (Exception e) {
+            log("erreur lors de la suppresion d'un étudiant d'un groupe");
+            response.getWriter().write("erreur");
+        }
 
     }
 
     private void doDeleteModule(HttpServletRequest request,
                                 HttpServletResponse response) throws ServletException, IOException {
 
-        int idModule = Integer.parseInt(request.getParameter("idModule"));
-        int idGroupe = Integer.parseInt(request.getParameter("idGroupe"));
-
-        log("delete");
-
-        GroupeDAO.deleteModule(idModule, idGroupe);
-
-        response.sendRedirect(request.getContextPath() + "/admin/groupe");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        try {
+            int idModule = Integer.parseInt(request.getParameter("idModule"));
+            int idGroupe = Integer.parseInt(request.getParameter("idGroupe"));
+            GroupeDAO.deleteModule(idModule, idGroupe);
+            response.getWriter().write(new Gson().toJson("{ id : " + idModule + "}"));
+        } catch (Exception e) {
+            log("erreur lors de la suppression d'un module d'un groupe");
+            response.getWriter().write("erreur");
+        }
 
     }
 
@@ -121,34 +133,33 @@ public class GroupeController extends HttpServlet {
                                         HttpServletResponse response) throws ServletException, IOException {
 
 
-        if (request.getParameter("module") != null) {
-            int idModule = Integer.parseInt(request.getParameter("module"));
-
-            int idGroupe = Integer.parseInt(request.getParameter("groupe"));
-
-            log("delete");
-
-            GroupeDAO.addModule(idModule, idGroupe);
+        try {
+            if (request.getParameter("module") != null) {
+                int idModule = Integer.parseInt(request.getParameter("module"));
+                int idGroupe = Integer.parseInt(request.getParameter("groupe"));
+                GroupeDAO.addModule(idModule, idGroupe);
+            }
+        } catch (Exception e) {
+            log("erreur lors de l'ajout d'un module");
         }
-
         response.sendRedirect(request.getContextPath() + "/admin/groupe");
+
+
 
     }
 
     private void doAddEtudiant(HttpServletRequest request,
                              HttpServletResponse response) throws ServletException, IOException {
 
-
-        if (request.getParameter("etudiant") != null) {
-            int idEtudiant = Integer.parseInt(request.getParameter("etudiant"));
-
-            int idGroupe = Integer.parseInt(request.getParameter("groupe"));
-
-            log("delete");
-
-            GroupeDAO.addEtudiant(idEtudiant, idGroupe);
+        try {
+            if (request.getParameter("etudiant") != null) {
+                int idEtudiant = Integer.parseInt(request.getParameter("etudiant"));
+                int idGroupe = Integer.parseInt(request.getParameter("groupe"));
+                GroupeDAO.addEtudiant(idEtudiant, idGroupe);
+            }
+        } catch (Exception e) {
+            log("erreur lors de l'ajout d'un étudiant");
         }
-
         response.sendRedirect(request.getContextPath() + "/admin/groupe");
 
     }

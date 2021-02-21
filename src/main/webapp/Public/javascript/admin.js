@@ -39,14 +39,13 @@ function deleteGroupe(id, el, url){
             data: {
                 id: id,
             },
-            success: function () {
+            success: function (data) {
                 console.log("succès de la requête ajax");
                 el.parentElement.parentElement.remove();
             },
 
             error: function (error) {
                 console.log("erreur de la requête ajax");
-                el.parentElement.parentElement.remove();
             }
         })
 }
@@ -59,14 +58,13 @@ function deleteModule(id, el){
         data: {
             id: id,
         },
-        success: function () {
+        success: function (data) {
             console.log("succès de la requête ajax");
             el.parentElement.parentElement.remove();
         },
 
         error: function (error) {
             console.log("erreur de la requête ajax");
-            el.parentElement.parentElement.remove();
         }
     })
 }
@@ -79,14 +77,13 @@ function deleteEtudiant(id, el){
         data: {
             id: id,
         },
-        success: function () {
+        success: function (data) {
             console.log("succès de la requête ajax");
             el.parentElement.parentElement.remove();
         },
 
         error: function (error) {
             console.log("erreur de la requête ajax");
-            el.parentElement.parentElement.remove();
         }
     })
 }
@@ -100,14 +97,13 @@ function deleteModuleOfGroupe(idModule, idGroupe, el) {
             idModule: idModule,
             idGroupe: idGroupe,
         },
-        success: function () {
+        success: function (data) {
             console.log("succès de la requête ajax");
             el.parentElement.parentElement.remove();
         },
 
         error: function (error) {
             console.log("erreur de la requête ajax");
-            el.parentElement.parentElement.remove();
         }
     })
 }
@@ -123,14 +119,13 @@ function deleteEtudiantOfGroupe(idEtudiant, idGroupe, el) {
             idEtudiant: idEtudiant,
             idGroupe: idGroupe,
         },
-        success: function () {
+        success: function (data) {
             console.log("succès de la requête ajax");
             el.parentElement.parentElement.remove();
         },
 
         error: function (error) {
             console.log("erreur de la requête ajax");
-            el.parentElement.parentElement.remove();
         }
     })
 }
@@ -146,14 +141,13 @@ function deleteGroupeOfModule(idGroupe, idModule, el) {
             idGroupe: idGroupe,
             idModule: idModule,
         },
-        success: function () {
+        success: function (data) {
             console.log("succès de la requête ajax");
             el.parentElement.parentElement.remove();
         },
 
         error: function (error) {
             console.log("erreur de la requête ajax");
-            el.parentElement.parentElement.remove();
         }
     })
 }

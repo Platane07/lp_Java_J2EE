@@ -72,14 +72,8 @@ public class Index extends HttpServlet {
             doEtudiant(request, response);
         }
 
-        // EtudiantDAO etudiant = new EtudiantDAO();
-        //List<Etudiant> listEtudiants = new ArrayList<>();
-
-        //listEtudiants = EtudiantDAO.getAll();
-
-        //request.setAttribute("etudiants", listEtudiants);
-
-        this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward( request, response );
+        //this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward( request, response );
+        loadJSP(urlIndex, request, response);
     }
 
 
@@ -87,10 +81,8 @@ public class Index extends HttpServlet {
     //
     private void doListeGroupes(HttpServletRequest request,
                            HttpServletResponse response) throws ServletException, IOException {
-
         try {
             Collection<Groupe> listeGroupes = GroupeDAO.getAll();
-
             // Inclusion du content dans le template
             request.setAttribute("groupes", listeGroupes);
             request.setAttribute("content", urlListeGroupes);

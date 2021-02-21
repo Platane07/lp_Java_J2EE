@@ -28,7 +28,6 @@
     }
 
     function updateNote(idEtudiant, idModule){
-        console.log("updateNote");
         const cell = document.getElementById(idEtudiant + '' + idModule);
 
         if (cell.children[0].value) {
@@ -41,16 +40,14 @@
                     idModule: idModule,
                     value: cell.children[0].value,
                 },
-                success: function () {
-                    console.log("succès de la requête ajax");
+                success: function (data) {
+                    console.log("succès de la requête ajax"+ data);
                     cell.innerHTML = cell.children[0].value;
                     cell.setAttribute("onClick", 'editNote(' + idEtudiant + ',' + idModule + ')');
                 },
 
                 error: function (error) {
-                    console.log("erreur de la requête ajax");
-                    cell.innerHTML = cell.children[0].value;
-                    cell.setAttribute("onClick", 'editNote(' + idEtudiant + ',' + idModule + ')');
+                    console.log("erreur lors de la modification de la note");
                 }
             })
         } else {
@@ -61,7 +58,6 @@
     }
 
     function createNote(idEtudiant, idModule){
-        console.log("createNote");
         const cell = document.getElementById(idEtudiant + '' + idModule);
         cell.removeAttribute("onClick");
 
@@ -74,18 +70,14 @@
                 idModule : idModule,
                 value: cell.children[0].value,
             },
-            success: function () {
-                console.log("succès de la requête ajax");
-                const note = cell.firstChild.getAttribute('value');
-                cell.innerHTML = note;
+            success: function (data) {
+                console.log("succès de la requête ajax"+data);
                 cell.innerHTML = cell.children[0].value;
                 cell.setAttribute("onClick", 'editNote(' + idEtudiant + ',' + idModule +')');
             },
 
             error: function (error) {
                 console.log("erreur de la requête ajax");
-                cell.innerHTML = cell.children[0].value;
-                cell.setAttribute("onClick", 'editNote(' + idEtudiant + ',' + idModule +')');
             }
         })
 

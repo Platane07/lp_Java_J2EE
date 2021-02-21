@@ -49,8 +49,8 @@
             <tr>
                 <th scope="row">Nouveau :</th>
                 <form method="post" action="<%= application.getContextPath()%>/etudiant/create">
-                    <td><input type="text" name="nom" placeholder="Nom de l'étudiant" required/></td>
-                    <td><input type="text" name="prenom" placeholder="Prénom de l'étudiant" required/></td>
+                    <td><input type="text" name="nom" placeholder="Nom de l'étudiant" pattern="[a-z]" required/></td>
+                    <td><input type="text" name="prenom" placeholder="Prénom de l'étudiant" pattern="[a-z]" required/></td>
                     <td><select class="form-select"  name="etudiantGroupe">
                         <% for(Groupe groupe: groupes) {%>
                         <option value="<%=groupe.getId()%>"><%=groupe.getNom()%></option>
