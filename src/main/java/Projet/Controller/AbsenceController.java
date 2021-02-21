@@ -26,8 +26,6 @@ public class AbsenceController extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        // On vérifie dans un premier temps si la demande est une requête ajax (XMLHttpRequest)
-
         // On récupère le path
         String action = request.getPathInfo();
 
@@ -46,13 +44,17 @@ public class AbsenceController extends HttpServlet {
     private void doCreateAbsence(HttpServletRequest request,
                                  HttpServletResponse response) throws ServletException, IOException {
 
+
         try {
+            //Sécurité, si l'id est bien envoyé et si c'est bien un int alors...
             if (request.getParameter("idEtudiant") != null) {
                 if (tryParse(request.getParameter("idEtudiant")) != null) {
+
+                    //Récupération des données
                     int idEtudiant = Integer.parseInt(request.getParameter("idEtudiant"));
                     LocalDateTime debut = LocalDateTime.parse(request.getParameter("dateDebut"));
                     LocalDateTime fin = LocalDateTime.parse(request.getParameter("dateFin"));
-                    //Vérification si la fin est bien supérieure au début
+                    //Vérification si la fin de l'absence est bien supérieure au début
                     if (debut.isBefore(fin)) {
                         boolean justifie = false;
                         if (request.getParameter("justifie") != null) {
@@ -61,9 +63,12 @@ public class AbsenceController extends HttpServlet {
                             }
                         }
 
+                        //Création de l'absence
                         AbsenceDAO.create(debut, fin, justifie, idEtudiant);
                         response.sendRedirect(request.getContextPath() + "/do/etudiant?id=" + idEtudiant);
-                    } else {
+                    }
+                    //Else inutiles mais on sait jamais
+                    else {
                         response.sendRedirect(request.getContextPath() + "/do/etudiant?id=" + idEtudiant);
                     }
                 } else {
@@ -79,13 +84,16 @@ public class AbsenceController extends HttpServlet {
     private void doDeleteAbsence(HttpServletRequest request,
                                  HttpServletResponse response) throws ServletException, IOException {
 
+        //Les delete de l'application sont tous réalisés avec ajax
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         try {
             if(tryParse(request.getParameter("idAbsence")) != null) {
                 int idAbsence = Integer.parseInt(request.getParameter("idAbsence"));
+                //Suppression de l'absence
                 AbsenceDAO.delete(idAbsence);
 
+                //Renvoi de l'id de l'absence
                 response.getWriter().write(new Gson().toJson("{idAbsence : " + idAbsence + "}"));
             }
         } catch (Exception e) {
@@ -97,6 +105,7 @@ public class AbsenceController extends HttpServlet {
     private void doUpdateAbsence(HttpServletRequest request,
                                  HttpServletResponse response) throws ServletException, IOException {
 
+        //Sécurité, cette fonction reprend la même base que la création de l'absence
         if (request.getParameter("idAbsence") != null) {
             if (tryParse(request.getParameter("idAbsence")) != null) {
                 try {
@@ -120,6 +129,7 @@ public class AbsenceController extends HttpServlet {
 
                         response.setContentType("application/json");
                         response.setCharacterEncoding("UTF-8");
+                        //Renvoi de l'id de l'absence si celle-ci a bien été modifiée
                         response.getWriter().write(new Gson().toJson("{AbsenceUpdated : " + idAbsence + "}"));
                     }
                 } catch (Exception e) {

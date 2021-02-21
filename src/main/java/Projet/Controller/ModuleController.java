@@ -47,6 +47,7 @@ public class ModuleController extends HttpServlet {
 
     }
 
+    //Création d'un module en récupérant son nom et les groupes séléctionnés
     private void doCreateModule(HttpServletRequest request,
                                 HttpServletResponse response) throws ServletException, IOException {
 
@@ -69,6 +70,8 @@ public class ModuleController extends HttpServlet {
 
     }
 
+
+    //Suppression d'un module par son id
     private void doDeleteModule(HttpServletRequest request,
                                 HttpServletResponse response) throws ServletException, IOException {
 
@@ -87,8 +90,11 @@ public class ModuleController extends HttpServlet {
 
     }
 
+    //Suppression d'un groupe à l'intérieur d'un module à l'aide d'une requête ajax.
+    //Données, id d'un module et d'un groupe
     private void doDeleteGroupe(HttpServletRequest request,
                                 HttpServletResponse response) throws ServletException, IOException {
+
 
         try {
             int idModule = Integer.parseInt(request.getParameter("idModule"));
@@ -102,9 +108,10 @@ public class ModuleController extends HttpServlet {
 
     }
 
+
+    //Ajouter un groupe dans un module
     private void doAddGroupe(HttpServletRequest request,
                              HttpServletResponse response) throws ServletException, IOException {
-
 
         try {
             if (request.getParameter("groupe") != null && request.getParameter("module") != null) {

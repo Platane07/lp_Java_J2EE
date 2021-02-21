@@ -36,7 +36,7 @@ public class NoteDAO {
         //
         em.getTransaction().begin();
 
-        // create new etudiant
+        // create new note
         Note note = new Note();
         note.setValeur(value);
         Etudiant etudiant = EtudiantDAO.getById(idEtudiant);
@@ -69,6 +69,7 @@ public class NoteDAO {
 
     }
 
+    //Récupération d'une note par l'id de l'étudiant et du module, étant donnée qu'une note n'a pas sa propre id
     public static Note getByEtudiantAndModule(int idEtudiant, int idModule){
 
         EntityManager em = GestionFactory.factory.createEntityManager();

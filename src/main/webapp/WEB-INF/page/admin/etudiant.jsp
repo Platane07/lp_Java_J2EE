@@ -39,7 +39,7 @@
                 </form>
             </tr>
 
-            <!-- List de tous les étusiants -->
+            <!-- List de tous les étudiants -->
 
             <h1>LISTE DES ETUDIANTS </h1>
             <thead class="thead-dark">

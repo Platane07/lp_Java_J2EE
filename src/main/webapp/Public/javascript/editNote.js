@@ -1,17 +1,17 @@
 
     console.log("allo");
 
-    // On ajoute un événement au bouton refresh
+    // Remplacement de la note par un champ input pour permettre d'éditer la note
     function editNote(idEtudiant, idModule){
-        console.log("editNotes");
         const cell = document.getElementById(idEtudiant + '' + idModule);
-        console.log(idEtudiant+''+idModule);
         const note = cell.innerText;
-        console.log(note);
         cell.innerHTML = '';
         let button = document.createElement("input");
         button.setAttribute("type", "button");
         button.setAttribute('value', 'Valider');
+
+
+        //Si la cellule de la note était vide au départ, passe par la route pour créer une note dans la base de données, sinon on update juste la note
         if (note == '') {
             button.setAttribute('onClick', 'createNote(' + idEtudiant + ',' + idModule +')');
         } else {
@@ -27,9 +27,12 @@
         cell.removeAttribute("onclick");
     }
 
+
+    //Function onclick qui sert à modifier une note déjà existante
     function updateNote(idEtudiant, idModule){
         const cell = document.getElementById(idEtudiant + '' + idModule);
 
+        //Si la cellule est vide au moment de la validation, envoie vers la route pour supprimer la note de la base de données
         if (cell.children[0].value) {
             $.ajax({
                 url: urlEditNote,
@@ -53,10 +56,9 @@
         } else {
             deleteNote(idEtudiant, idModule);
         }
-
-
     }
 
+    //Fonction qui permet de créer la note dans la base de données
     function createNote(idEtudiant, idModule){
         const cell = document.getElementById(idEtudiant + '' + idModule);
         cell.removeAttribute("onClick");
@@ -80,10 +82,9 @@
                 console.log("erreur de la requête ajax");
             }
         })
-
-      //  cell.setAttribute("onClick", 'editNote(' + idEtudiant + ',' + idModule +')');
     }
 
+    // Suppression d'une note en laissant le champ vide
     function deleteNote(idEtudiant, idModule){
         console.log("deleteNote");
         const cell = document.getElementById(idEtudiant + '' + idModule);
@@ -105,28 +106,7 @@
 
             error: function (error) {
                 console.log("erreur de la requête ajax");
-                cell.innerHTML = '';
-                cell.setAttribute("onClick", 'editNote(' + idEtudiant + ',' + idModule +')');
             }
         })
 
     }
-
-        //
-       /* $.ajax({
-            url: urlgetetudiants,       // url créée dans le fichier etudiants.jsp
-            type: 'post',
-            dataType: 'json',
-            data: {test: "testajax"},   // Donnée envoyée au serveur
-
-            success: function (data) {    // Donnée reçue du serveur
-                console.log("Succès de la requête ajax");
-
-                var textedJson = "<div>" + JSON.stringify(data) + "</div>";
-                $("#etudiants").append(textedJson);
-            },
-
-            error: function (error) {
-                console.log("Erreur de la requête ajax");
-            }
-        });*/

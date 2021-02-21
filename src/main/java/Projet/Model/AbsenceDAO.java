@@ -17,11 +17,9 @@ public class AbsenceDAO {
         EntityManager em = GestionFactory.factory.createEntityManager();
 
 
-
-        //
         em.getTransaction().begin();
 
-        // create new etudiant
+        // create new absence
         Absence absence = new Absence();
         absence.setDébut(debut);
         absence.setFin(fin);
@@ -46,6 +44,7 @@ public class AbsenceDAO {
         //
         em.getTransaction().begin();
 
+        //Suppression d'une absence
         Absence absence = em.find(Absence.class, idAbsence);
         Absence absence2 = em.merge(absence);
         em.remove(absence2);
@@ -67,7 +66,7 @@ public class AbsenceDAO {
         // Ouverture de la transaction
         em.getTransaction().begin();
 
-        // Attacher une entité persistante (note) à l’EntityManager courant  pour réaliser la modification
+        // Attacher une entité persistante (absence) à l’EntityManager courant  pour réaliser la modification
         em.merge(absence);
 
         // Commit

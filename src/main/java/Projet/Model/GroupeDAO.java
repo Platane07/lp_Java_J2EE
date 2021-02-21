@@ -104,6 +104,7 @@ public class GroupeDAO {
 
 
 
+        //tentative de suppression dun etudiant dans un groupe, l'étudiant existe toujours hors du groupe, il pourra être assigné à un autre groupe
         try {
             Etudiant etudiant = em.find(Etudiant.class, idEtudiant);
             Groupe groupe = em.find(Groupe.class, idGroupe);
@@ -128,6 +129,7 @@ public class GroupeDAO {
         //
         em.getTransaction().begin();
 
+        //ajoute un étudiant au groupe
         Etudiant etudiant = em.find(Etudiant.class, idEtudiant);
         Groupe groupe = em.find(Groupe.class, idGroupe);
         groupe.addEtudiant(etudiant);
@@ -147,6 +149,7 @@ public class GroupeDAO {
         //
         em.getTransaction().begin();
 
+        //ajoute un module au groupe
         Module module = em.find(Module.class, idModule);
         Groupe groupe = em.find(Groupe.class, idGroupe);
         groupe.addModule(module);
@@ -166,7 +169,7 @@ public class GroupeDAO {
         // Creation de l'entity manager
         EntityManager em = GestionFactory.factory.createEntityManager();
 
-        // Recherche 
+        // Récupération de tous les groupes à l'aide d'une requête sql
         Query q = em.createQuery("SELECT g FROM Groupe g ORDER BY g.id DESC");
 
         @SuppressWarnings("unchecked")

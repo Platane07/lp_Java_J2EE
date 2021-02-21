@@ -27,6 +27,7 @@ public class AdminController extends HttpServlet {
     // INIT
     public void init() throws ServletException {
 
+        //récupération des urls liées à l'admin dans le fichier web.xml
         urlGroupe = getServletConfig().getInitParameter("urlGroupe");
         urlEtudiant = getServletConfig().getInitParameter("urlEtudiant");
         urlModule = getServletConfig().getInitParameter("urlModule");
@@ -55,7 +56,6 @@ public class AdminController extends HttpServlet {
         if (action.equals("/etudiant")){
             doEtudiant(request, response);
         }
-
         if(action.equals("/groupe")){
             doGroupe(request, response);
         }
@@ -71,6 +71,9 @@ public class AdminController extends HttpServlet {
                           HttpServletResponse response) throws ServletException, IOException {
 
 
+        //Récupération de toutes les données nécessaires (modules, groupe et etudiants sans groupe)
+        //Il y a une sécurité, en effet, on ne peut pas changer un étudiant de groupe comme ça, il faut d'abord le supprimer d'un autre groupe pour pouvoir l'ajouter au groupe,
+        // c'est voulu (me demandez pas pourquoi j'ai fait ça je viens à l'instant  de me rendre compte que c'est totalement débile)
         try {
             List<Groupe> groupes = GroupeDAO.getAll();
             List<Module> modules = ModuleDAO.getAll();
@@ -96,11 +99,11 @@ public class AdminController extends HttpServlet {
     private void doModule(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
+        //Affichage de la page de gestion des modules
         try {
 
             List<Groupe> groupes = GroupeDAO.getAll();
             List<Module> modules = ModuleDAO.getAll();
-
 
             // affichage des modules dans le template
             request.setAttribute("groupes", groupes);
@@ -119,7 +122,8 @@ public class AdminController extends HttpServlet {
 
 
 
-    // Affichage de la page de la liste des étudiants
+    // /////////////////////// affichage de l'espace de gestion des etudiants
+    //
     private void doEtudiant(HttpServletRequest request,
                                   HttpServletResponse response) throws ServletException, IOException {
 
