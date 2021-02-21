@@ -53,7 +53,7 @@
             <tbody>
             <% for(Groupe groupe : groupes) {%>
             <tr>
-                <td class="text-center"><h2><%=groupe.getId()%></h2></td>>
+                <td class="text-center"><h2><%=groupe.getId()%></h2></td>
                 <td class="text-center"><h2><%=groupe.getNom()%></h2></td>
 
 
@@ -119,7 +119,7 @@
                                 <td>
                                     <select name="etudiant">
                                         <%
-                                            for(Etudiant etudiant: etudiants) {%>sd
+                                            for(Etudiant etudiant: etudiants) {%>
                                         <option value="<%=etudiant.getId()%>"><%=etudiant.getNom()%> <%=etudiant.getPrenom()%></option>
                                         <% } %>
                                     </select>

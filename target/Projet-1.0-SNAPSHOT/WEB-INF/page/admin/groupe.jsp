@@ -53,8 +53,8 @@
             <tbody>
             <% for(Groupe groupe : groupes) {%>
             <tr>
-                <td><%=groupe.getId()%></td>
-                <td><%=groupe.getNom()%></td>
+                <td class="text-center"><h2><%=groupe.getId()%></h2></td>>
+                <td class="text-center"><h2><%=groupe.getNom()%></h2></td>
 
 
 
