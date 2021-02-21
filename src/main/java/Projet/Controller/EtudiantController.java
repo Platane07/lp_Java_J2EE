@@ -31,7 +31,7 @@ public class EtudiantController extends HttpServlet {
             doCreateEtudiant(request, response);
         }
         // Exécution action
-        if (action.equals("/delete")) {
+        if (action.equals("/delete") && isXMLHttpRequest(request)) {
             doDeleteEtudiant(request, response);
         }
     }
@@ -41,18 +41,19 @@ public class EtudiantController extends HttpServlet {
 
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
-        log(nom);
 
-        if(request.getParameter("etudiantGroupe") != null) {
-            int idGroupe = Integer.parseInt(request.getParameter("etudiantGroupe"));
-            Groupe groupe = GroupeDAO.getById(idGroupe);
-            Etudiant etudiant = EtudiantDAO.create(nom, prenom, groupe);
-        } else {
-            Etudiant etudiant = EtudiantDAO.create(nom, prenom, null);
+        try {
+            if (request.getParameter("etudiantGroupe") != null) {
+                int idGroupe = Integer.parseInt(request.getParameter("etudiantGroupe"));
+                Groupe groupe = GroupeDAO.getById(idGroupe);
+                Etudiant etudiant = EtudiantDAO.create(nom, prenom, groupe);
+            } else {
+                Etudiant etudiant = EtudiantDAO.create(nom, prenom, null);
+            }
+
+        } catch (Exception e) {
+            log("impossible de créer un étudiant");
         }
-
-        ServletContext sc = getServletContext();
-        System.out.println(sc.getContextPath());
 
         response.sendRedirect(request.getContextPath() + "/admin/etudiant");
 
@@ -61,15 +62,25 @@ public class EtudiantController extends HttpServlet {
     private void doDeleteEtudiant(HttpServletRequest request,
                                 HttpServletResponse response) throws ServletException, IOException {
 
-        int id = Integer.parseInt(request.getParameter("id"));
+        try {
 
-        EtudiantDAO.delete(id);
+            int id = Integer.parseInt(request.getParameter("id"));
 
-        ServletContext sc = getServletContext();
-        System.out.println(sc.getContextPath());
+            EtudiantDAO.delete(id);
+
+            ServletContext sc = getServletContext();
+            System.out.println(sc.getContextPath());
+        } catch (Exception e) {
+            log("impossible de supprimer un étudiant");
+        }
 
         response.sendRedirect(request.getContextPath() + "/admin/etudiant");
 
+    }
+
+    private boolean isXMLHttpRequest(HttpServletRequest request) {
+        String test = request.getHeader("x-requested-with");
+        return request.getHeader("x-requested-with").equals("XMLHttpRequest");
     }
 
 

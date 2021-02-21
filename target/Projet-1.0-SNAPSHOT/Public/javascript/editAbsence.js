@@ -7,16 +7,17 @@ function deleteAbsence(idAbsence, el, ind) {
         data: {
             idAbsence: idAbsence,
         },
-        success: function () {
-            console.log("succès de la requête ajax");
+        success: function (data) {
+            console.log("succès de la suppression de l'absence");
             el.parentElement.parentElement.remove();
             ind = 0;
         },
 
         error: function (error) {
-            console.log("erreur de la requête ajax");
-            el.parentElement.parentElement.remove();
-            ind = 0;
+           console.log("erreur de la requête, l'absence n'a pas pu être supprimée");
+           /* el.parentElement.parentElement.remove();
+            ind = 0;*/
+
         }
     })
 }
@@ -80,30 +81,19 @@ function validerAbsence(idAbsence, el) {
                 justifie: cellJustifie.checked === true ? "true" : "false",
                 idAbsence: idAbsence,
             },
-            success: function () {
-                console.log("succès de la requête ajax");
+            success: function (data) {
+                console.log("succès de la requête ajax, modification de l'absence : " + data);
                 cellDebut.parentNode.innerHTML = cellDebut.value;
                 console.log(cellDebut.value);
                 cellFin.parentNode.innerHTML = cellFin.value;
-                cellDebut.parentNode.innerHTML = cellJustifie.value === "true" ? "oui" : "non";
+                cellJustifie.parentNode.innerHTML = cellJustifie.value === "true" ? "oui" : "non";
                 el.setAttribute("onClick", "updateAbsence(" + idAbsence + ",this)");
                 el.innerHTML = "Modifier";
             },
 
             error: function (error) {
                 console.log("erreur de la requête ajax");
-                cellDebut.parentNode.innerHTML = cellDebut.value;
-                console.log(cellDebut.value);
-                cellFin.parentNode.innerHTML = cellFin.value;
-                console.log(cellJustifie.parentNode);
-                if(cellJustifie.checked === true) {
-                    cellJustifie.parentNode.innerHTML = "oui";
-                } else {
-                    cellJustifie.parentNode.innerHTML = "non";
-                }
-                console.log("4");
-                el.setAttribute("onClick", "updateAbsence(" + idAbsence + ",this)");
-                el.innerHTML = "Modifier";
+
             }
         })
 

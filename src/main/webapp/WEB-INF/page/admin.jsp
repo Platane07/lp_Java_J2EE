@@ -29,7 +29,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <h1>Espace Administrateur</h1>
-
+    </div>
     <div class="row justify-content-center">
         <a href="<%= application.getContextPath()%>/admin/groupe">
             <div class="card text-white bg-primary mb-3 itemMenu">

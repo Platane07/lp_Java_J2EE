@@ -15,9 +15,9 @@
     // Description des urls de demande ajax
     const urlUpdateAbsence = "<%=application.getContextPath()%>/absence/update";
     const urlDeleteAbsence = "<%=application.getContextPath()%>/absence/delete";
-    const urlEditNote = "<%=application.getContextPath()%>/ajax/editNote";
-    const urlCreateNote = "<%=application.getContextPath()%>/ajax/createNote";
-    const urlDeleteNote = "<%=application.getContextPath()%>/ajax/deleteNote"
+    const urlEditNote = "<%=application.getContextPath()%>/note/editNote";
+    const urlCreateNote = "<%=application.getContextPath()%>/note/createNote";
+    const urlDeleteNote = "<%=application.getContextPath()%>/note/deleteNote"
 </script>
 <script type='text/javascript' src="<%=application.getContextPath()%>/Public/javascript/editAbsence.js"
         charset="UTF-8"></script>
@@ -31,7 +31,11 @@
             <img class="card-img-top" src="<%=application.getContextPath()%>/Public/img/pp.jpeg" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title"><%= etudiant.getNom()%> <%= etudiant.getPrenom() %></h5>
-                <p class="card-text"><%= etudiant.getGroupe().getNom()%></p>
+                <p class="card-text">
+                    <% if (etudiant.getGroupe() != null) { %>
+                        <%=etudiant.getGroupe().getNom()%>
+                    <% } %>
+                </p>
             </div>
         </div>
         <!-- table des absences -->
@@ -71,25 +75,31 @@
             </tr>
             </tbody>
         </table>
-        <table class="table table-striped table-dark">
-            <thead>
-            <tr>
-                <th scope="col">Module</th>
-                <th scope="col">Note</th>
-            </tr>
-            </thead>
-            <tbody>
-                <% Groupe groupe = etudiant.getGroupe();
-                for(Module module : etudiant.getGroupe().getModules()) {%>
-            <tr>
-                <td><%=module.getNom()%></td>
-                <%if (etudiant.getNoteByModule(module) != null) {%>
-                    <td id="<%=etudiant.getId()%><%=module.getId()%>" onClick="editNote(<%=etudiant.getId()%>,<%=module.getId()%>)"><%=etudiant.getNoteByModule(module).getValeur()%></td>
-                <%} else {%>
-                    <td id="<%=etudiant.getId()%><%=module.getId()%>" onClick="editNote(<%=etudiant.getId()%>,<%=module.getId()%>)"></td>
-                <%}%>
-            </tr>
-                <%} %>
-        </table>
+        <% if (etudiant.getGroupe() != null) { %>
+            <table class="table table-striped table-dark">
+                <thead>
+                <tr>
+                    <th scope="col">Module</th>
+                    <th scope="col">Note</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                    <% Groupe groupe = etudiant.getGroupe();
+                    for(Module module : etudiant.getGroupe().getModules()) {%>
+                <tr>
+                    <td><%=module.getNom()%></td>
+                    <%if (etudiant.getNoteByModule(module) != null) {%>
+                        <td id="<%=etudiant.getId()%><%=module.getId()%>" onClick="editNote(<%=etudiant.getId()%>,<%=module.getId()%>)"><%=etudiant.getNoteByModule(module).getValeur()%></td>
+                    <%} else {%>
+                        <td id="<%=etudiant.getId()%><%=module.getId()%>" onClick="editNote(<%=etudiant.getId()%>,<%=module.getId()%>)"></td>
+                    <%}%>
+                </tr>
+                    <%}} else {%>
+                <tr>
+                    <td>L'étudiant n'a pas de groupes</td>
+                </tr>
+                <% } %>
+            </table>
     </div>
 </div>

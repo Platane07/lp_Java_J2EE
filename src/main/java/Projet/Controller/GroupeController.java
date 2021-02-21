@@ -153,5 +153,10 @@ public class GroupeController extends HttpServlet {
 
     }
 
+    private boolean isXMLHttpRequest(HttpServletRequest request) {
+        String test = request.getHeader("x-requested-with");
+        return request.getHeader("x-requested-with").equals("XMLHttpRequest");
+    }
+
 
 }

@@ -62,50 +62,59 @@ public class AdminController extends HttpServlet {
         if(action.equals("/module")){
             doModule(request, response);
         }
-
-        // EtudiantDAO etudiant = new EtudiantDAO();
-        //List<Etudiant> listEtudiants = new ArrayList<>();
-
-        //listEtudiants = EtudiantDAO.getAll();
-
-        //request.setAttribute("etudiants", listEtudiants);
-
         this.getServletContext().getRequestDispatcher("/WEB-INF/page/admin.jsp").forward( request, response );
     }
 
-    // /////////////////////// affichage de la liste des étudiants et leurs notes dans un groupe
+    // /////////////////////// affichage de l'espace de gestion des groupes
     //
     private void doGroupe(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
-        List<Groupe> groupes = GroupeDAO.getAll();
-        List<Module> modules = ModuleDAO.getAll();
-        List<Etudiant> etudiants = EtudiantDAO.getEtudiantsWithoutGroupe();
 
-        // Inclusion du content dans le template
-        request.setAttribute("groupes", groupes);
-        request.setAttribute("modules", modules);
-        request.setAttribute("etudiants", etudiants);
+        try {
+            List<Groupe> groupes = GroupeDAO.getAll();
+            List<Module> modules = ModuleDAO.getAll();
+            List<Etudiant> etudiants = EtudiantDAO.getEtudiantsWithoutGroupe();
+
+            request.setAttribute("groupes", groupes);
+            request.setAttribute("modules", modules);
+            request.setAttribute("etudiants", etudiants);
+            // Inclusion de l'affichage des groupes dans le template
+            request.setAttribute("adminContent", urlGroupe);
+        } catch (Exception e) {
+            log("impossible de récupérer les groupes");
+            loadJSP(urlIndex, request, response);
+
+        }
+
         request.setAttribute("content", urlAdmin);
-        request.setAttribute("adminContent", urlGroupe);
         loadJSP(urlIndex, request, response);
     }
 
-
+    // /////////////////////// affichage de l'espace de gestion des modules
+    //
     private void doModule(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
+        try {
 
-        List<Groupe> groupes = GroupeDAO.getAll();
-        List<Module> modules = ModuleDAO.getAll();
+            List<Groupe> groupes = GroupeDAO.getAll();
+            List<Module> modules = ModuleDAO.getAll();
 
 
-        // Inclusion du content dans le template
-        request.setAttribute("groupes", groupes);
-        request.setAttribute("modules", modules);
-        request.setAttribute("content", urlAdmin);
-        request.setAttribute("adminContent", urlModule);
-        loadJSP(urlIndex, request, response);
+            // affichage des modules dans le template
+            request.setAttribute("groupes", groupes);
+            request.setAttribute("modules", modules);
+            request.setAttribute("adminContent", urlModule);
+            request.setAttribute("content", urlAdmin);
+            loadJSP(urlIndex, request, response);
+
+        } catch (Exception e) {
+            log("impossible de récupérer les modules");
+            request.setAttribute("content", urlAdmin);
+            loadJSP(urlIndex, request, response);
+        }
+
     }
 
 
@@ -115,15 +124,22 @@ public class AdminController extends HttpServlet {
                                   HttpServletResponse response) throws ServletException, IOException {
 
 
-        List<Etudiant> etudiants = EtudiantDAO.getAll();
-        List<Groupe> groupes = GroupeDAO.getAll();
+        try {
+            List<Etudiant> etudiants = EtudiantDAO.getAll();
+            List<Groupe> groupes = GroupeDAO.getAll();
 
-        // Inclusion du content dans le template
-        request.setAttribute("etudiants", etudiants);
-        request.setAttribute("groupes", groupes);
-        request.setAttribute("content", urlAdmin);
-        request.setAttribute("adminContent", urlEtudiant);
-        loadJSP(urlIndex, request, response);
+            // Affichage des modules dans le template
+            request.setAttribute("etudiants", etudiants);
+            request.setAttribute("groupes", groupes);
+            request.setAttribute("content", urlAdmin);
+            request.setAttribute("adminContent", urlEtudiant);
+            loadJSP(urlIndex, request, response);
+        } catch (Exception e) {
+            log("impossible de récupérer les modules");
+            request.setAttribute("content", urlAdmin);
+            loadJSP(urlIndex, request, response);
+        }
+
     }
     /**
      * Charge la JSP indiquée en paramètre

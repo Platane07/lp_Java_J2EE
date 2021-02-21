@@ -88,12 +88,17 @@ public class Index extends HttpServlet {
     private void doListeGroupes(HttpServletRequest request,
                            HttpServletResponse response) throws ServletException, IOException {
 
-        Collection<Groupe> listeGroupes = GroupeDAO.getAll();
+        try {
+            Collection<Groupe> listeGroupes = GroupeDAO.getAll();
 
-        // Inclusion du content dans le template
-        request.setAttribute("groupes", listeGroupes);
-        request.setAttribute("content", urlListeGroupes);
-        loadJSP(urlIndex, request, response);
+            // Inclusion du content dans le template
+            request.setAttribute("groupes", listeGroupes);
+            request.setAttribute("content", urlListeGroupes);
+            loadJSP(urlIndex, request, response);
+        } catch (Exception e) {
+            log("erreur dans le rendu de la liste des étudiants");
+            loadJSP(urlIndex, request, response);
+        }
     }
 
     // /////////////////////// affichage de la liste des étudiants et leurs notes dans un groupe
@@ -102,32 +107,42 @@ public class Index extends HttpServlet {
                           HttpServletResponse response) throws ServletException, IOException {
 
 
-        Groupe groupe = GroupeDAO.getById(Integer.parseInt(request.getParameter("id")));
+        try {
+            Groupe groupe = GroupeDAO.getById(Integer.parseInt(request.getParameter("id")));
+            List<Module> modules = groupe.getModules();
 
-        List<Module> modules = groupe.getModules();
+            System.out.println(groupe);
+            List<Etudiant> etudiants = groupe.getEtudiants();
 
-        System.out.println(groupe);
-        List<Etudiant> etudiants = groupe.getEtudiants();
-
-        // Inclusion du content dans le template
-        request.setAttribute("modules", modules);
-        request.setAttribute("groupe", groupe);
-        request.setAttribute("etudiants", etudiants);
-        request.setAttribute("content", urlGroupe);
-        loadJSP(urlIndex, request, response);
+            // Inclusion du content dans le template
+            request.setAttribute("modules", modules);
+            request.setAttribute("groupe", groupe);
+            request.setAttribute("etudiants", etudiants);
+            request.setAttribute("content", urlGroupe);
+            loadJSP(urlIndex, request, response);
+        } catch (Exception e) {
+            log("erreur dans le rendu de la liste des étudiants");
+            loadJSP(urlIndex, request, response);
+        }
     }
 
 
     private void doEtudiant(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
-
-        Etudiant etudiant = EtudiantDAO.getById(Integer.parseInt(request.getParameter("id")));
-
-        // Inclusion du content dans le template
-        request.setAttribute("etudiant", etudiant);
-        request.setAttribute("content", urlEtudiant);
-        loadJSP(urlIndex, request, response);
+        try {
+            if (EtudiantDAO.getById(Integer.parseInt(request.getParameter("id"))) != null) {
+                Etudiant etudiant = EtudiantDAO.getById(Integer.parseInt(request.getParameter("id")));
+                request.setAttribute("etudiant", etudiant);
+                request.setAttribute("content", urlEtudiant);
+                loadJSP(urlIndex, request, response);
+            } else {
+                log("erreur l'étudiant n'existe pas");
+            }
+        } catch (Exception e) {
+            log("erreur dans le rendu de l'étudiant");
+            loadJSP(urlIndex, request, response);
+        }
     }
 
 
@@ -136,29 +151,38 @@ public class Index extends HttpServlet {
     private void doListeEtudiants(HttpServletRequest request,
                             HttpServletResponse response) throws ServletException, IOException {
 
-
-        List<Etudiant> etudiants = EtudiantDAO.getAll();
-
+        try {
+            List<Etudiant> etudiants = EtudiantDAO.getAll();
+            request.setAttribute("etudiants", etudiants);
+            request.setAttribute("content", urlListeEtudiants);
+            loadJSP(urlIndex, request, response);
+        } catch (Exception e) {
+            log("erreur dans le rendu de la liste des étudiants");
+            loadJSP(urlIndex, request, response);
+        }
         // Inclusion du content dans le template
-        request.setAttribute("etudiants", etudiants);
-        request.setAttribute("content", urlListeEtudiants);
-        loadJSP(urlIndex, request, response);
+
     }
 
     private void doAdmin(HttpServletRequest request,
                                   HttpServletResponse response) throws ServletException, IOException {
 
 
-        List<Etudiant> etudiants = EtudiantDAO.getAll();
-        List<Groupe> groupes = GroupeDAO.getAll();
-        List<Module> modules = ModuleDAO.getAll();
 
-        // Inclusion du content dans le template
-        request.setAttribute("etudiants", etudiants);
-        request.setAttribute("groupes", groupes);
-        request.setAttribute("modules", modules);
-        request.setAttribute("content", urlAdmin);
-        loadJSP(urlIndex, request, response);
+        try {
+            List<Etudiant> etudiants = EtudiantDAO.getAll();
+            List<Groupe> groupes = GroupeDAO.getAll();
+            List<Module> modules = ModuleDAO.getAll();
+            // Inclusion du content dans le template
+            request.setAttribute("etudiants", etudiants);
+            request.setAttribute("groupes", groupes);
+            request.setAttribute("modules", modules);
+            request.setAttribute("content", urlAdmin);
+            loadJSP(urlIndex, request, response);
+        } catch (Exception e) {
+            log("erreur dans le rendu de la page admin");
+            loadJSP(urlIndex, request, response);
+        }
     }
 
     /**

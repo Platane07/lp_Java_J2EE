@@ -28,7 +28,6 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <table class="table table-striped table-dark">
         <h1>Espace Administrateur</h1>
     </div>
     <div class="row justify-content-center">
