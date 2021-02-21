@@ -58,6 +58,38 @@
         <url-pattern>/do/*</url-pattern>
     </servlet-mapping>
 
+    <!-- Navigation dans l'espace administrateur -->
+
+    <servlet>
+        <servlet-name>admin</servlet-name>
+        <servlet-class>Projet.Controller.AdminController</servlet-class>
+        <init-param>
+            <param-name>urlIndex</param-name>
+            <param-value>/WEB-INF/index.jsp</param-value>
+        </init-param>
+        <init-param>
+            <param-name>urlAdmin</param-name>
+            <param-value>/WEB-INF/page/admin.jsp</param-value>
+        </init-param>
+        <init-param>
+            <param-name>urlEtudiant</param-name>
+            <param-value>/WEB-INF/page/admin/etudiant.jsp</param-value>
+        </init-param>
+        <init-param>
+            <param-name>urlGroupe</param-name>
+            <param-value>/WEB-INF/page/admin/groupe.jsp</param-value>
+        </init-param>
+        <init-param>
+            <param-name>urlModule</param-name>
+            <param-value>/WEB-INF/page/admin/module.jsp</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>admin</servlet-name>
+        <url-pattern>/admin/*</url-pattern>
+    </servlet-mapping>
+
     <!-- routes pour la gestion des notes des étudiants -->
 
     <servlet>

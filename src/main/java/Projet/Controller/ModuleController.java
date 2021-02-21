@@ -37,6 +37,12 @@ public class ModuleController extends HttpServlet {
         if (action.equals("/delete")) {
             doDeleteModule(request, response);
         }
+        if (action.equals("/deleteGroupe")) {
+            doDeleteGroupe(request, response);
+        }
+        if (action.equals("/addGroupe")) {
+            doAddGroupe(request, response);
+        }
 
     }
 
@@ -47,17 +53,17 @@ public class ModuleController extends HttpServlet {
         log(nom);
         String[] idGroupes = request.getParameterValues("groupesAdded");
 
-        if (idGroupes == null) {
-            log("nuuuuuuuulmll");
-        }
         List<Groupe> groupes = new ArrayList<>();
-        for(String id : idGroupes){
-            groupes.add(GroupeDAO.getById(Integer.parseInt(id)));
-        }
 
+
+        if (idGroupes != null) {
+            for (String id : idGroupes) {
+                groupes.add(GroupeDAO.getById(Integer.parseInt(id)));
+            }
+        }
         Module module = ModuleDAO.create(nom, groupes);
 
-        response.sendRedirect(request.getContextPath() + "/do/admin");
+        response.sendRedirect(request.getContextPath() + "/admin/module");
 
     }
 
@@ -73,9 +79,39 @@ public class ModuleController extends HttpServlet {
         ServletContext sc = getServletContext();
         System.out.println(sc.getContextPath());
 
-        response.sendRedirect(request.getContextPath() + "/do/admin");
+        response.sendRedirect(request.getContextPath() + "/admin/module");
 
     }
 
+    private void doDeleteGroupe(HttpServletRequest request,
+                                HttpServletResponse response) throws ServletException, IOException {
+
+
+        int idModule = Integer.parseInt(request.getParameter("idModule"));
+        int idGroupe = Integer.parseInt(request.getParameter("idGroupe"));
+
+        log("delete");
+
+        ModuleDAO.deleteGroupe(idModule, idGroupe);
+
+        response.sendRedirect(request.getContextPath() + "/admin/module");
+
+    }
+
+    private void doAddGroupe(HttpServletRequest request,
+                             HttpServletResponse response) throws ServletException, IOException {
+
+
+        if (request.getParameter("groupe") != null && request.getParameter("module") != null) {
+            int idModule = Integer.parseInt(request.getParameter("module"));
+
+            int idGroupe = Integer.parseInt(request.getParameter("groupe"));
+
+            ModuleDAO.addGroupe(idGroupe, idModule);
+        }
+
+        response.sendRedirect(request.getContextPath() + "/admin/groupe");
+
+    }
 
 }

@@ -18,10 +18,10 @@ public class Groupe implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY )
     private Integer id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = false, nullable = false)
     private String nom;
 
-    @OneToMany(mappedBy = "groupe", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})    // LAZY = fetch when needed, EAGER = fetch immediately
+    @OneToMany(mappedBy = "groupe", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})    // LAZY = fetch when needed, EAGER = fetch immediately
     private List<Etudiant> etudiants;
 
     @ManyToMany(mappedBy = "groupes", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -69,6 +69,10 @@ public class Groupe implements Serializable {
         this.modules.remove(module);
         module.getGroupes().remove(this);
     }
+    public void removeEtudiant(Etudiant etudiant){
+        this.etudiants.remove(etudiant);
+    }
+
 
     @Override
     public boolean equals(Object o) {

@@ -84,9 +84,51 @@ public class GroupeDAO {
 
         Module module = em.find(Module.class, idModule);
         Groupe groupe = em.find(Groupe.class, idGroupe);
-        em.merge(groupe);
         groupe.removeModule(module);
 
+        em.merge(groupe);
+
+        // Commit
+        em.getTransaction().commit();
+
+        // Close the entity manager
+        em.close();
+
+    }
+
+    public static void deleteEtudiant(int idEtudiant, int idGroupe){
+
+        EntityManager em = GestionFactory.factory.createEntityManager();
+        //
+        em.getTransaction().begin();
+
+        try {
+            Etudiant etudiant = em.find(Etudiant.class, idEtudiant);
+            Groupe groupe = em.find(Groupe.class, idGroupe);
+            groupe.removeEtudiant(etudiant);
+            em.merge(groupe); 
+        } catch (Exception e) {
+            System.out.println("Suppression de l'étudiant du groupe n'a pas abouti");
+        }
+        // Commit
+        em.getTransaction().commit();
+
+        // Close the entity manager
+        em.close();
+
+    }
+
+    public static void addModule(int idModule, int idGroupe){
+
+        EntityManager em = GestionFactory.factory.createEntityManager();
+        //
+        em.getTransaction().begin();
+
+        Module module = em.find(Module.class, idModule);
+        Groupe groupe = em.find(Groupe.class, idGroupe);
+        groupe.addModule(module);
+
+        em.merge(groupe);
         // Commit
         em.getTransaction().commit();
 

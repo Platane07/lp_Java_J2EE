@@ -4,7 +4,7 @@ function populateSelect(el){
 
     let addSelect = el.parentNode.parentNode.lastChild;
 
-    console.log(addSelect);
+    console.log(addSelect.parentNode);
 
     var option = document.createElement("option");
     option.value = id;
@@ -99,6 +99,52 @@ function deleteModuleOfGroupe(idModule, idGroupe, el) {
         data: {
             idModule: idModule,
             idGroupe: idGroupe,
+        },
+        success: function () {
+            console.log("succès de la requête ajax");
+            el.parentElement.parentElement.remove();
+        },
+
+        error: function (error) {
+            console.log("erreur de la requête ajax");
+            el.parentElement.parentElement.remove();
+        }
+    })
+}
+
+function deleteEtudiantOfGroupe(idEtudiant, idGroupe, el) {
+    console.log(idEtudiant);
+    console.log(idGroupe);
+    $.ajax({
+        url: urlDeleteEtudiantOfGroupe,
+        type: 'post',
+        dataType: 'json',
+        data: {
+            idEtudiant: idEtudiant,
+            idGroupe: idGroupe,
+        },
+        success: function () {
+            console.log("succès de la requête ajax");
+            el.parentElement.parentElement.remove();
+        },
+
+        error: function (error) {
+            console.log("erreur de la requête ajax");
+            el.parentElement.parentElement.remove();
+        }
+    })
+}
+
+function deleteGroupeOfModule(idGroupe, idModule, el) {
+    console.log(idModule);
+    console.log(idGroupe);
+    $.ajax({
+        url: urlDeleteGroupeOfModule,
+        type: 'post',
+        dataType: 'json',
+        data: {
+            idGroupe: idGroupe,
+            idModule: idModule,
         },
         success: function () {
             console.log("succès de la requête ajax");

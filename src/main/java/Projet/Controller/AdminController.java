@@ -21,6 +21,7 @@ public class AdminController extends HttpServlet {
     private String urlGroupe;
     private String urlModule;
     private String urlAdmin;
+    private String urlIndex;
 
 
     // INIT
@@ -30,6 +31,7 @@ public class AdminController extends HttpServlet {
         urlEtudiant = getServletConfig().getInitParameter("urlEtudiant");
         urlModule = getServletConfig().getInitParameter("urlModule");
         urlAdmin = getServletConfig().getInitParameter("urlAdmin");
+        urlIndex = getServletConfig().getInitParameter("urlIndex");
         GestionFactory.open();
 
     }
@@ -68,7 +70,7 @@ public class AdminController extends HttpServlet {
 
         //request.setAttribute("etudiants", listEtudiants);
 
-        this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward( request, response );
+        this.getServletContext().getRequestDispatcher("/WEB-INF/page/admin.jsp").forward( request, response );
     }
 
     // /////////////////////// affichage de la liste des étudiants et leurs notes dans un groupe
@@ -76,20 +78,17 @@ public class AdminController extends HttpServlet {
     private void doGroupe(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
-
-        Groupe groupe = GroupeDAO.getById(Integer.parseInt(request.getParameter("id")));
-
-        List<Module> modules = groupe.getModules();
-
-        System.out.println(groupe);
-        List<Etudiant> etudiants = groupe.getEtudiants();
+        List<Groupe> groupes = GroupeDAO.getAll();
+        List<Module> modules = ModuleDAO.getAll();
+        List<Etudiant> etudiants = EtudiantDAO.getEtudiantsWithoutGroupe();
 
         // Inclusion du content dans le template
+        request.setAttribute("groupes", groupes);
         request.setAttribute("modules", modules);
-        request.setAttribute("groupe", groupe);
         request.setAttribute("etudiants", etudiants);
-        request.setAttribute("content", urlGroupe);
-        loadJSP(urlAdmin, request, response);
+        request.setAttribute("content", urlAdmin);
+        request.setAttribute("adminContent", urlGroupe);
+        loadJSP(urlIndex, request, response);
     }
 
 
@@ -97,19 +96,16 @@ public class AdminController extends HttpServlet {
                           HttpServletResponse response) throws ServletException, IOException {
 
 
-        Groupe groupe = GroupeDAO.getById(Integer.parseInt(request.getParameter("id")));
+        List<Groupe> groupes = GroupeDAO.getAll();
+        List<Module> modules = ModuleDAO.getAll();
 
-        List<Module> modules = groupe.getModules();
-
-        System.out.println(groupe);
-        List<Etudiant> etudiants = groupe.getEtudiants();
 
         // Inclusion du content dans le template
+        request.setAttribute("groupes", groupes);
         request.setAttribute("modules", modules);
-        request.setAttribute("groupe", groupe);
-        request.setAttribute("etudiants", etudiants);
-        request.setAttribute("content", urlModule);
-        loadJSP(urlAdmin, request, response);
+        request.setAttribute("content", urlAdmin);
+        request.setAttribute("adminContent", urlModule);
+        loadJSP(urlIndex, request, response);
     }
 
 
@@ -120,11 +116,14 @@ public class AdminController extends HttpServlet {
 
 
         List<Etudiant> etudiants = EtudiantDAO.getAll();
+        List<Groupe> groupes = GroupeDAO.getAll();
 
         // Inclusion du content dans le template
         request.setAttribute("etudiants", etudiants);
-        request.setAttribute("content", urlEtudiant);
-        loadJSP(urlAdmin, request, response);
+        request.setAttribute("groupes", groupes);
+        request.setAttribute("content", urlAdmin);
+        request.setAttribute("adminContent", urlEtudiant);
+        loadJSP(urlIndex, request, response);
     }
     /**
      * Charge la JSP indiquée en paramètre

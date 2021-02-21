@@ -51,7 +51,7 @@ public class EtudiantController extends HttpServlet {
         ServletContext sc = getServletContext();
         System.out.println(sc.getContextPath());
 
-        response.sendRedirect(request.getContextPath() + "/do/admin");
+        response.sendRedirect(request.getContextPath() + "/admin/etudiant");
 
     }
 
@@ -65,7 +65,7 @@ public class EtudiantController extends HttpServlet {
         ServletContext sc = getServletContext();
         System.out.println(sc.getContextPath());
 
-        response.sendRedirect(request.getContextPath() + "/do/admin");
+        response.sendRedirect(request.getContextPath() + "/admin/etudiant");
 
     }
 

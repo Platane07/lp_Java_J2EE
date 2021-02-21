@@ -46,7 +46,6 @@ public class Etudiant implements Serializable {
 	}
 
 
-
 	public Integer getId() {
 		return this.id;
 	}
