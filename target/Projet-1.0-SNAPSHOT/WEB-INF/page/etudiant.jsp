@@ -67,7 +67,7 @@
                 <td class="cellDebut"><%=absence.getDébut()%></td>
                 <td class="cellFin"><%=absence.getFin()%></td>
                 <td class="cellJustifie"><% if(absence.isJustifié()) { %>oui<% } else { %>non<% } %></td>
-                <td><button class="btn btn-danger" onClick="deleteAbsence(<%=absence.getId()%>, this, <%=ind%>)">supprimer</button><button onClick="updateAbsence(<%=absence.getId()%>, this)" class="btn btn-pimary">Modifier</button></td>
+                <td><button class="btn btn-danger" onClick="deleteAbsence(<%=absence.getId()%>, this, <%=ind%>)">supprimer</button><button onClick="updateAbsence(<%=absence.getId()%>, this)" class="btn btn-primary">Modifier</button></td>
             </tr>
             <%ind++; } %>
             <tr>
