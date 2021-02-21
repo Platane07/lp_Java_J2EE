@@ -1,5 +1,7 @@
 package Projet.Model;
 
+import org.eclipse.persistence.jpa.config.Cascade;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -20,8 +22,6 @@ public class Etudiant implements Serializable {
 	@Column(nullable = false)
 	private String nom;
 
-	private int nbAbsences;
-
 	@ManyToOne(optional = true, fetch = FetchType.LAZY)
 	@JoinColumn(columnDefinition = "integer", name="groupe_id", nullable = true)
 	private Groupe groupe;
@@ -29,7 +29,7 @@ public class Etudiant implements Serializable {
 	@OneToMany(mappedBy = "etudiant" , cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Absence> absences;
 
-	@OneToMany(mappedBy = "etudiant", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "etudiant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Note> notes;
 
 	private static final long serialVersionUID = 1L;
@@ -49,11 +49,6 @@ public class Etudiant implements Serializable {
 
 	public Integer getId() {
 		return this.id;
-	}
-
-	public Etudiant() {
-		super();
-		nbAbsences = 0;
 	}
 
 	public void setId(Integer id) {
@@ -95,7 +90,7 @@ public class Etudiant implements Serializable {
 		List<Note> notes = this.getNotes();
 
 		float moyenne = 0;
-		int ind = 0;
+		int ind = 1;
 
 		for(Note note : notes){
 			moyenne = moyenne + note.getValeur();
@@ -113,14 +108,6 @@ public class Etudiant implements Serializable {
 			}
 		}
 		return null;
-	}
-
-	public int getNbAbsences() {
-		return nbAbsences;
-	}
-
-	public void setNbAbsences(int nbAbsences) {
-		this.nbAbsences = nbAbsences;
 	}
 
 	@Override

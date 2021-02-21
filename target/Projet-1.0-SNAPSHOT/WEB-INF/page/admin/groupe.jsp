@@ -24,17 +24,31 @@
 %>
 <div class="container">
     <div class="row justify-content-center">
-        <table class="table table-striped table-dark table-bordered">
+            <table class="table table-bordered">
+
+            <!-- formulaire d'ajout d'un groupe -->
+            <!-- on ne peut sélectionner que les étudiants n'ayant pas encore de groupes (c'est possible)-->
+            <tr>
+                <th scope="row">Nouveau :</th>
+                <form method="post" name="addGroupe" action="<%= application.getContextPath()%>/groupe/create">
+                    <td><input type="text" name="nomGroupe" placeholder="Nom du groupe" autocomplete="off" pattern="[A-Za-z0-9]{1,30}" required/></td>
+                    <td><select name="modules" class="form-select" multiple><% for(Module module: modules) {%><option value="<%=module.getId()%>" onClick="populateSelect(this)"><%= module.getNom()%></option><% } %></select><select name="modulesAdded" multiple></select></td>
+                    <td><select name="etudiants" class="form-select" multiple><% for(Etudiant etudiant: etudiants) {%><option value="<%=etudiant.getId()%>" onClick="populateSelect(this)"><%= etudiant.getNom()%> <%=etudiant.getPrenom()%></option><% } %></select><select name="etudiantsAdded" multiple></select></td>
+                    <td><input type="submit" class="btn btn-success" value="Ajouter"/></td>
+                </form>
+            </tr>
+
+            <!-- Liste des groupes existants -->
 
             <h1>LISTE DES GROUPES </h1>
-            <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Nom</th>
-                <th scope="col">Modules</th>
-                <th scope="col">Etudiants</th>
-                <th scope="col">Actions</th>
-            </tr>
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Modules</th>
+                    <th scope="col">Etudiants</th>
+                    <th scope="col">Actions</th>
+                </tr>
             </thead>
             <tbody>
             <% for(Groupe groupe : groupes) {%>
@@ -42,11 +56,18 @@
                 <td><%=groupe.getId()%></td>
                 <td><%=groupe.getNom()%></td>
 
-                <!-- LISTE DES MODULES -->
+
+
+                <!-- LISTE DES MODULES EFFECTUES PAR LE GROUPE -->
 
 
                 <td>
-                    <table class="table table-striped table-dark table-bordered">
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col" colspan="2" class="text-center">Modules dans le groupe</th>
+                            </tr>
+                        </thead>
                         <% for(Module module : groupe.getModules()) { %>
                         <tr>
                             <td><%=module.getNom()%></td>
@@ -67,7 +88,7 @@
                                     </select>
                                     <input type="hidden" name="groupe" value="<%=groupe.getId()%>"/>
                                 </td>
-                                <td><input type="submit"/></td>
+                                <td><input class="btn btn-success" type="submit"/></td>
                             </form>
                         </tr>
                     </table>
@@ -75,12 +96,17 @@
 
 
 
-                <!-- LISTE DES ETUDIANTS -->
+                <!-- LISTE DES ETUDIANTS DANS LE GROUPE -->
 
 
 
                 <td>
-                    <table class="table table-striped table-dark table-bordered">
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" colspan="2" class="text-center">Etudiants du groupe</th>
+                        </tr>
+                        </thead>
                         <% for(Etudiant etudiant : groupe.getEtudiants()) { %>
                         <tr>
                             <td><%=etudiant.getNom()%> <%=etudiant.getPrenom()%></td>
@@ -94,12 +120,12 @@
                                     <select name="etudiant">
                                         <%
                                             for(Etudiant etudiant: etudiants) {%>sd
-                                        <option value="<%=etudiant.getId()%>"><%=etudiant.getNom()%></option>
+                                        <option value="<%=etudiant.getId()%>"><%=etudiant.getNom()%> <%=etudiant.getPrenom()%></option>
                                         <% } %>
                                     </select>
                                     <input type="hidden" name="groupe" value="<%=groupe.getId()%>"/>
                                 </td>
-                                <td><input type="submit"/></td>
+                                <td><input class="btn btn-success" type="submit"/></td>
                             </form>
                         </tr>
                     </table>
@@ -109,18 +135,11 @@
 
                 </td>
                 <td>
-                    <button onClick="deleteGroupe(<%=groupe.getId()%>, this)">supprimer</button>
+                    <button class="btn btn-danger" onClick="deleteGroupe(<%=groupe.getId()%>, this)">supprimer</button>
                 </td>
             </tr>
             <% } %>
-            <tr>
-                <th scope="row">Nouveau :</th>
-                <form method="post" name="addGroupe" action="<%= application.getContextPath()%>/groupe/create">
-                    <td><input type="text" name="nomGroupe" placeholder="Nom du groupe" autocomplete="off" required/></td>
-                    <td><select name="modules" class="form-select" multiple><% for(Module module: modules) {%><option value="<%=module.getId()%>" onClick="populateSelect(this)"><%= module.getNom()%></option><% } %></select><select name="modulesAdded" multiple></select></td>
-                    <td><input type="submit" value="Ajouter"/></td>
-                </form>
-            </tr>
+
             </tbody>
         </table>
     </div>

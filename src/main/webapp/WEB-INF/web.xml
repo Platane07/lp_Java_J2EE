@@ -5,12 +5,9 @@
          version="4.0">
 
     <!-- Page d'accueil du site -->
-    <welcome-file-list>
-        <welcome-file>do</welcome-file>
-    </welcome-file-list>
 
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>do</welcome-file>
     </welcome-file-list>
 
 
@@ -30,6 +27,10 @@
         <init-param>
             <param-name>index</param-name>
             <param-value>/WEB-INF/index.jsp</param-value>
+        </init-param>
+        <init-param>
+            <param-name>urlHome</param-name>
+            <param-value>/WEB-INF/page/home.jsp</param-value>
         </init-param>
         <init-param>
             <param-name>urlListeGroupes</param-name>

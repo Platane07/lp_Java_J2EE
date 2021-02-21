@@ -38,12 +38,16 @@
                 </p>
             </div>
         </div>
+
+
+
+
         <!-- table des absences -->
+
+
         <% List<Absence> absences = etudiant.getAbsences();%>
-
-
-        <table class="table table-striped table-dark">
-            <thead>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
             <tr>
                 <th scope="col">Absence</th>
                 <th scope="col">Début</th>
@@ -75,13 +79,18 @@
             </tr>
             </tbody>
         </table>
+
+        <!-- Fin de la table des absences -->
+
+        <!-- Table des notes -->
+
         <% if (etudiant.getGroupe() != null) { %>
-            <table class="table table-striped table-dark">
-                <thead>
-                <tr>
-                    <th scope="col">Module</th>
-                    <th scope="col">Note</th>
-                </tr>
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Module</th>
+                        <th scope="col">Note</th>
+                    </tr>
                 </thead>
                 <tbody>
 
@@ -100,6 +109,7 @@
                     <td>L'étudiant n'a pas de groupes</td>
                 </tr>
                 <% } %>
+                </tbody>
             </table>
     </div>
 </div>

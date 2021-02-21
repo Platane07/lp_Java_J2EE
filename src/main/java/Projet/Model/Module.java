@@ -24,7 +24,7 @@ public class Module implements Serializable {
     )
     private final List<Groupe> groupes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "module", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "module", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private final List<Note> notes = new ArrayList<>();
 
 

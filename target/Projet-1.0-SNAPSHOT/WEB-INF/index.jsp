@@ -18,8 +18,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="" crossorigin="anonymous">
-
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="<%=application.getContextPath()%>/Public/css/app.css" crossorigin="anonymous">
     <!-- jQuery and JS bundle w/ Popper.js -->
     <script type='text/javascript' src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
@@ -27,12 +27,6 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-
-
-
-
-
-
 <jsp:include page="<%= application.getInitParameter("header")%>"/>
 <jsp:include page="<%=content%>"/>
 <jsp:include page="<%= application.getInitParameter("footer")%>"/>

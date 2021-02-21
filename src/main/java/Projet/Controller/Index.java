@@ -23,6 +23,7 @@ public class Index extends HttpServlet {
     private String urlEtudiant;
     private String urlListeEtudiants;
     private String urlAdmin;
+    private String urlHome;
 
 
     // INIT
@@ -33,6 +34,7 @@ public class Index extends HttpServlet {
         urlListeEtudiants = getServletConfig().getInitParameter("urlListeEtudiants");
         urlEtudiant = getServletConfig().getInitParameter("urlEtudiant");
         urlAdmin = getServletConfig().getInitParameter("urlAdmin");
+        urlHome = getServletConfig().getInitParameter("urlHome");
         GestionFactory.open();
 
     }
@@ -50,7 +52,11 @@ public class Index extends HttpServlet {
 
         String action = request.getPathInfo();
         if (action == null){
-            action = "/";
+            action = "/home";
+        }
+
+        if (action.equals("/home")){
+            doHome(request, response);
         }
 
         if (action.equals("/admin")){
@@ -76,6 +82,12 @@ public class Index extends HttpServlet {
         loadJSP(urlIndex, request, response);
     }
 
+    private void doHome(HttpServletRequest request,
+                                HttpServletResponse response) throws ServletException, IOException {
+
+        request.setAttribute("content", urlHome);
+        loadJSP(urlIndex, request, response);
+    }
 
     // /////////////////////// affichage de la liste des groupes
     //

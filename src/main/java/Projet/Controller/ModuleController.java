@@ -20,6 +20,7 @@ import java.util.List;
 
 import Projet.Model.*;
 import Projet.Model.Module;
+import com.google.gson.Gson;
 import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 public class ModuleController extends HttpServlet {
@@ -34,10 +35,10 @@ public class ModuleController extends HttpServlet {
         if (action.equals("/create")) {
             doCreateModule(request, response);
         }
-        if (action.equals("/delete")) {
+        if (action.equals("/delete") && isXMLHttpRequest(request)) {
             doDeleteModule(request, response);
         }
-        if (action.equals("/deleteGroupe")) {
+        if (action.equals("/deleteGroupe") && isXMLHttpRequest(request)) {
             doDeleteGroupe(request, response);
         }
         if (action.equals("/addGroupe")) {
@@ -49,19 +50,20 @@ public class ModuleController extends HttpServlet {
     private void doCreateModule(HttpServletRequest request,
                                 HttpServletResponse response) throws ServletException, IOException {
 
-        String nom = request.getParameter("nomModule");
-        log(nom);
-        String[] idGroupes = request.getParameterValues("groupesAdded");
+        try {
+            String nom = request.getParameter("nomModule");
+            String[] idGroupes = request.getParameterValues("groupesAdded");
 
-        List<Groupe> groupes = new ArrayList<>();
-
-
-        if (idGroupes != null) {
-            for (String id : idGroupes) {
-                groupes.add(GroupeDAO.getById(Integer.parseInt(id)));
+            List<Groupe> groupes = new ArrayList<>();
+            if (idGroupes != null) {
+                for (String id : idGroupes) {
+                    groupes.add(GroupeDAO.getById(Integer.parseInt(id)));
+                }
             }
+            ModuleDAO.create(nom, groupes);
+        } catch (Exception e) {
+            log("erreur lors de la création d'un module");
         }
-        Module module = ModuleDAO.create(nom, groupes);
 
         response.sendRedirect(request.getContextPath() + "/admin/module");
 
@@ -70,31 +72,33 @@ public class ModuleController extends HttpServlet {
     private void doDeleteModule(HttpServletRequest request,
                                 HttpServletResponse response) throws ServletException, IOException {
 
-        String id = request.getParameter("id");
-
-        log("delete");
-
-        Module module = ModuleDAO.delete(Integer.parseInt(id));
-
-        ServletContext sc = getServletContext();
-        System.out.println(sc.getContextPath());
-
-        response.sendRedirect(request.getContextPath() + "/admin/module");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        try {
+            String id = request.getParameter("id");
+            Module module = ModuleDAO.delete(Integer.parseInt(id));
+            ServletContext sc = getServletContext();
+            System.out.println(sc.getContextPath());
+            response.getWriter().write(new Gson().toJson("{ id : "+id+"}"));
+        } catch (Exception e) {
+            log("erreur lors de la suppression du module");
+            response.getWriter().write("erreur");
+        }
 
     }
 
     private void doDeleteGroupe(HttpServletRequest request,
                                 HttpServletResponse response) throws ServletException, IOException {
 
-
-        int idModule = Integer.parseInt(request.getParameter("idModule"));
-        int idGroupe = Integer.parseInt(request.getParameter("idGroupe"));
-
-        log("delete" + idModule);
-
-        ModuleDAO.deleteGroupe(idModule, idGroupe);
-
-        response.sendRedirect(request.getContextPath() + "/admin/module");
+        try {
+            int idModule = Integer.parseInt(request.getParameter("idModule"));
+            int idGroupe = Integer.parseInt(request.getParameter("idGroupe"));
+            ModuleDAO.deleteGroupe(idModule, idGroupe);
+            response.getWriter().write(new Gson().toJson("{ id : " + idGroupe + "}"));
+        } catch (Exception e) {
+            log("erreur lors de la suppression du module");
+            response.getWriter().write("erreur");
+        }
 
     }
 
@@ -102,16 +106,16 @@ public class ModuleController extends HttpServlet {
                              HttpServletResponse response) throws ServletException, IOException {
 
 
-        if (request.getParameter("groupe") != null && request.getParameter("module") != null) {
-            int idModule = Integer.parseInt(request.getParameter("module"));
-
-            int idGroupe = Integer.parseInt(request.getParameter("groupe"));
-
-            ModuleDAO.addGroupe(idGroupe, idModule);
+        try {
+            if (request.getParameter("groupe") != null && request.getParameter("module") != null) {
+                int idModule = Integer.parseInt(request.getParameter("module"));
+                int idGroupe = Integer.parseInt(request.getParameter("groupe"));
+                ModuleDAO.addGroupe(idGroupe, idModule);
+            }
+        } catch (Exception e) {
+            log("erreur lors de la suppression du groupe");
         }
-
         response.sendRedirect(request.getContextPath() + "/admin/module");
-
     }
 
     private boolean isXMLHttpRequest(HttpServletRequest request) {

@@ -117,6 +117,7 @@ public class GroupeController extends HttpServlet {
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+
         try {
             int idModule = Integer.parseInt(request.getParameter("idModule"));
             int idGroupe = Integer.parseInt(request.getParameter("idGroupe"));
