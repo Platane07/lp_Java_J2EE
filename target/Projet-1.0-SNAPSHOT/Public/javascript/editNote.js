@@ -47,6 +47,7 @@
                     console.log("succès de la requête ajax"+ data);
                     cell.innerHTML = cell.children[0].value;
                     cell.setAttribute("onClick", 'editNote(' + idEtudiant + ',' + idModule + ')');
+                    cell.setAttribute("class", "note");
                 },
 
                 error: function (error) {
@@ -76,6 +77,7 @@
                 console.log("succès de la requête ajax"+data);
                 cell.innerHTML = cell.children[0].value;
                 cell.setAttribute("onClick", 'editNote(' + idEtudiant + ',' + idModule +')');
+                cell.setAttribute("class", "note");
             },
 
             error: function (error) {
@@ -102,6 +104,7 @@
                 console.log("succès de la requête ajax");
                 cell.innerHTML = '';
                 cell.setAttribute("onClick", 'editNote(' + idEtudiant + ',' + idModule +')');
+                cell.setAttribute("class", "note");
             },
 
             error: function (error) {

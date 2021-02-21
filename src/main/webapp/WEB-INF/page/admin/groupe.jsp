@@ -24,7 +24,7 @@
 %>
 <div class="container">
     <div class="row justify-content-center">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-secondary">
 
             <!-- formulaire d'ajout d'un groupe -->
             <!-- on ne peut sélectionner que les étudiants n'ayant pas encore de groupes (c'est possible)-->
@@ -53,8 +53,8 @@
             <tbody>
             <% for(Groupe groupe : groupes) {%>
             <tr>
-                <td><%=groupe.getId()%></td>
-                <td><%=groupe.getNom()%></td>
+                <td class="text-center"><h2><%=groupe.getId()%></h2></td>>
+                <td class="text-center"><h2><%=groupe.getNom()%></h2></td>
 
 
 

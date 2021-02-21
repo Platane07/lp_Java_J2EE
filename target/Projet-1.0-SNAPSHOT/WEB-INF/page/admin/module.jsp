@@ -21,7 +21,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-secondary">
             <h1>LISTE DES MODULES </h1>
             <thead class="thead-dark">
             <tr>

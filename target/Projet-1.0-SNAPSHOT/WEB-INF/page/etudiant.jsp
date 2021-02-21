@@ -102,9 +102,9 @@
                 <tr>
                     <td><%=module.getNom()%></td>
                     <%if (etudiant.getNoteByModule(module) != null) {%>
-                        <td id="<%=etudiant.getId()%><%=module.getId()%>" onClick="editNote(<%=etudiant.getId()%>,<%=module.getId()%>)"><%=etudiant.getNoteByModule(module).getValeur()%></td>
+                        <td class="note" id="<%=etudiant.getId()%><%=module.getId()%>" onClick="editNote(<%=etudiant.getId()%>,<%=module.getId()%>)"><%=etudiant.getNoteByModule(module).getValeur()%></td>
                     <%} else {%>
-                        <td id="<%=etudiant.getId()%><%=module.getId()%>" onClick="editNote(<%=etudiant.getId()%>,<%=module.getId()%>)"></td>
+                        <td class="note" id="<%=etudiant.getId()%><%=module.getId()%>" onClick="editNote(<%=etudiant.getId()%>,<%=module.getId()%>)"></td>
                     <%}%>
                 </tr>
                     <%}} else {%>

@@ -46,9 +46,9 @@
                 <td><%= etu.getNom()%></td>
                  <% for(Module module : groupe.getModules()){ %>
                     <%if (etu.getNoteByModule(module) != null) {%>
-                        <td id="<%=etu.getId()%><%=module.getId()%>" onClick="editNote(<%=etu.getId()%>,<%=module.getId()%>)"><%=etu.getNoteByModule(module).getValeur()%></td>
+                        <td class="note" id="<%=etu.getId()%><%=module.getId()%>" onClick="editNote(<%=etu.getId()%>,<%=module.getId()%>)"><%=etu.getNoteByModule(module).getValeur()%></td>
                     <%} else {%>
-                        <td id="<%=etu.getId()%><%=module.getId()%>" onClick="editNote(<%=etu.getId()%>,<%=module.getId()%>)"></td>
+                        <td class="note" id="<%=etu.getId()%><%=module.getId()%>" onClick="editNote(<%=etu.getId()%>,<%=module.getId()%>)"></td>
                     <%}%>
                 <%}%>
             </tr>

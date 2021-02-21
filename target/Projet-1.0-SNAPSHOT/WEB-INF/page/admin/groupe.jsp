@@ -24,7 +24,7 @@
 %>
 <div class="container">
     <div class="row justify-content-center">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-secondary">
 
             <!-- formulaire d'ajout d'un groupe -->
             <!-- on ne peut sélectionner que les étudiants n'ayant pas encore de groupes (c'est possible)-->

@@ -20,7 +20,7 @@
     List<Groupe> groupes = (List<Groupe>) request.getAttribute("groupes");%>
 <div class="container">
     <div class="row justify-content-center">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-secondary">
 
             <!-- formulaire d'ajout d'un étudiant -->
 

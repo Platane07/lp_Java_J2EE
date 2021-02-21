@@ -90,7 +90,7 @@ public class Etudiant implements Serializable {
 		List<Note> notes = this.getNotes();
 
 		float moyenne = 0;
-		int ind = 1;
+		int ind = 0;
 
 		for(Note note : notes){
 			moyenne = moyenne + note.getValeur();
