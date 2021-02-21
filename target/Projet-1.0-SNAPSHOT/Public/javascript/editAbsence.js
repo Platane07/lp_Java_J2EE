@@ -1,5 +1,5 @@
+//Suppression d'une absence à l'aide d'une requête ajax
 function deleteAbsence(idAbsence, el, ind) {
-
     $.ajax({
         url: urlDeleteAbsence,
         type: 'post',
@@ -20,6 +20,7 @@ function deleteAbsence(idAbsence, el, ind) {
 }
 
 
+// Remplace les champs de la rangée de l'absence par des champs input pour permettre l'envoi de ces données avec ajax, et ainsi updater la base de données
     function updateAbsence(idAbsence, el) {
 
         var row = el.parentNode.parentNode;
@@ -48,6 +49,7 @@ function deleteAbsence(idAbsence, el, ind) {
         }
         console.log("1");
 
+        //Au prochain click du bouton, effectue la requête ajax qui va permettre de modifier l'absence en base de données
         el.setAttribute("onClick", "validerAbsence(" + idAbsence + ",this)");
         el.innerHTML = "Valider";
         console.log("1");
@@ -55,6 +57,8 @@ function deleteAbsence(idAbsence, el, ind) {
 
     }
 
+
+//function qui envoie la requête de modification de l'absence en base, et remplace les champs input par des cellules neutres
 function validerAbsence(idAbsence, el) {
         console.log("2");
 
@@ -79,6 +83,7 @@ function validerAbsence(idAbsence, el) {
                 idAbsence: idAbsence,
             },
             success: function (data) {
+                //Si la requête a réussi, alors suppression des champs input
                 console.log("succès de la requête ajax, modification de l'absence : " + data);
                 cellDebut.parentNode.innerHTML = cellDebut.value;
                 cellFin.parentNode.innerHTML = cellFin.value;

@@ -57,13 +57,21 @@ public class GroupeController extends HttpServlet {
             if (request.getParameter("nomGroupe") != null) {
                 String nom = request.getParameter("nomGroupe");
                 String[] idModules = request.getParameterValues("modulesAdded");
+                String[] idEtudiants = request.getParameterValues("etudiantsAdded");
                 List<Module> modules = new ArrayList<>();
+                List<Etudiant> etudiants = new ArrayList<>();
+                //Récupération des étudiants et des modules
                 if (idModules != null) {
                     for (String id : idModules) {
                         modules.add(ModuleDAO.getById(Integer.parseInt(id)));
                     }
                 }
-                GroupeDAO.create(nom, modules);
+                if (idEtudiants != null ){
+                    for (String id : idEtudiants){
+                        etudiants.add(EtudiantDAO.getById(Integer.parseInt(id)));
+                    }
+                }
+                GroupeDAO.create(nom, modules, etudiants);
                 ServletContext sc = getServletContext();
                 System.out.println(sc.getContextPath());
 

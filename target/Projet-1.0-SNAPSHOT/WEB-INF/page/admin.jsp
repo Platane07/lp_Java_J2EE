@@ -22,7 +22,7 @@
     }
 
 </style>
-
+<!-- PETIT MENU PROPRE A L ADMIN QUI VIENT SE RAJOUTER À LA NAVBAR DE L'INDEX -->
 <script type='text/javascript' src="<%=application.getContextPath()%>/Public/javascript/admin.js"
         charset="UTF-8"></script>
 
@@ -32,19 +32,19 @@
     </div>
     <div class="row justify-content-center">
         <a href="<%= application.getContextPath()%>/admin/groupe">
-            <div class="card text-white bg-primary mb-3 itemMenu">
+            <div class="card text-white bg-primary itemMenu">
                 <div class="card-header">GROUPES</div>
             </div>
         </a>
 
         <a href="<%= application.getContextPath()%>/admin/etudiant">
-            <div class="card text-white bg-primary mb-3 itemMenu">
+            <div class="card text-white bg-primary itemMenu">
                 <div class="card-header">ETUDIANTS</div>
             </div>
         </a>
 
         <a href="<%= application.getContextPath()%>/admin/module">
-            <div class="card text-white bg-primary mb-3 itemMenu">
+            <div class="card text-white bg-primary itemMenu">
                 <div class="card-header">MODULES</div>
             </div>
         </a>

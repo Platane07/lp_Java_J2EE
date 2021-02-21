@@ -18,6 +18,10 @@
 <script type='text/javascript' src="<%=application.getContextPath()%>/Public/javascript/editNote.js"
         charset="UTF-8">
 </script>
+
+<!-- /////////// TABLEAU QUI AFFICHE LES DETAILS D'UN GROUPE, ON PEUT Y MODIFIER LES NOTES DE CHAQUE ETUDIANT -->
+
+
 <div class="container">
     <div class="row justify-content-center">
             <% Groupe groupe = (Groupe) request.getAttribute("groupe");%>

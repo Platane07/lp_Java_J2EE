@@ -1,12 +1,12 @@
+
+//Utilisée pour récupérer les champs d'un select multiple et les assigner à un autre champ select qui enverra ses values au controlleur
 function populateSelect(el){
     const id = el.value;
     const nom = el.innerHTML;
 
     let addSelect = el.parentNode.parentNode.lastChild;
 
-    console.log(addSelect);
-
-    var option = document.createElement("option");
+    let option = document.createElement("option");
     option.value = id;
     option.text = nom ;
     option.selected = true;
@@ -16,6 +16,8 @@ function populateSelect(el){
     el.remove();
 }
 
+
+//function appelée qui fait l'inverse de celle d'avant, elle enlève une value et la remet en non selectionnée dans le select précedent
 function depopulateSelect(el){
     const id = el.value;
     const nom = el.innerHTML;
@@ -28,9 +30,11 @@ function depopulateSelect(el){
 
     select.appendChild(option);
     el.remove();
-
 }
 
+
+
+//Fonction qui sert à supprimer un groupe (il y en a une multitude, pas moyen de faire passer l'url directement dans un onClick
 function deleteGroupe(id, el, url){
         $.ajax({
             url: urlDeleteGroupe,
@@ -50,6 +54,8 @@ function deleteGroupe(id, el, url){
         })
 }
 
+
+//Suppression d'un module (pareil mais différent)
 function deleteModule(id, el){
     $.ajax({
         url: urlDeleteModule,
@@ -69,6 +75,7 @@ function deleteModule(id, el){
     })
 }
 
+//Suppression d'un étudiant
 function deleteEtudiant(id, el){
     $.ajax({
         url: urlDeleteEtudiant,
@@ -88,6 +95,8 @@ function deleteEtudiant(id, el){
     })
 }
 
+
+//suppression d'un module d'un groupe
 function deleteModuleOfGroupe(idModule, idGroupe, el) {
     $.ajax({
         url: urlDeleteModuleOfGroupe,
@@ -108,9 +117,9 @@ function deleteModuleOfGroupe(idModule, idGroupe, el) {
     })
 }
 
+
+//suppression d'un étudiant d'un groupe
 function deleteEtudiantOfGroupe(idEtudiant, idGroupe, el) {
-    console.log(idEtudiant);
-    console.log(idGroupe);
     $.ajax({
         url: urlDeleteEtudiantOfGroupe,
         type: 'post',
@@ -130,6 +139,9 @@ function deleteEtudiantOfGroupe(idEtudiant, idGroupe, el) {
     })
 }
 
+
+
+//Suppression d'un groupe d'un module
 function deleteGroupeOfModule(idGroupe, idModule, el) {
     console.log(idModule);
     console.log(idGroupe);

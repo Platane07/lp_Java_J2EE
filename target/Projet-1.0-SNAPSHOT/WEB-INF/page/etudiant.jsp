@@ -12,7 +12,7 @@
 --%>
 
 <script type='text/javascript'>
-    // Description des urls de demande ajax
+    // Description des urls de demande ajax, ces urls vont servir dans les fichiers editAbsence.js et editNote.js
     const urlUpdateAbsence = "<%=application.getContextPath()%>/absence/update";
     const urlDeleteAbsence = "<%=application.getContextPath()%>/absence/delete";
     const urlEditNote = "<%=application.getContextPath()%>/note/editNote";
@@ -23,6 +23,9 @@
         charset="UTF-8"></script>
 <script type='text/javascript' src="<%=application.getContextPath()%>/Public/javascript/editNote.js"
         charset="UTF-8"></script>
+
+
+<!-- AFFICHAGE DES DETAILS DE L ETUDIANT -->
 
 <% Etudiant etudiant = (Etudiant) request.getAttribute("etudiant");%>
 <div class="container">
@@ -64,7 +67,7 @@
                 <td class="cellDebut"><%=absence.getDébut()%></td>
                 <td class="cellFin"><%=absence.getFin()%></td>
                 <td class="cellJustifie"><% if(absence.isJustifié()) { %>oui<% } else { %>non<% } %></td>
-                <td><button onClick="deleteAbsence(<%=absence.getId()%>, this, <%=ind%>)">supprimer</button><button onClick="updateAbsence(<%=absence.getId()%>, this)">Modifier</button></td>
+                <td><button class="btn btn-danger" onClick="deleteAbsence(<%=absence.getId()%>, this, <%=ind%>)">supprimer</button><button onClick="updateAbsence(<%=absence.getId()%>, this)" class="btn btn-pimary">Modifier</button></td>
             </tr>
             <%ind++; } %>
             <tr>
@@ -74,7 +77,7 @@
                     <td><input type="datetime-local" name="dateFin" placeholder="Date de fin" required/></td>
                     <td><input type="checkbox" name="justifie" value="true"/></td>
                     <input type="hidden" name="idEtudiant" value="<%= etudiant.getId()%>"/>
-                    <td><input type="submit" value="Ajouter"/></td>
+                    <td><input type="submit" class="btn btn-success" value="Ajouter"/></td>
                 </form>
             </tr>
             </tbody>

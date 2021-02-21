@@ -15,6 +15,8 @@
     </div>
 </div>
 </br>
+
+<!-- table qui affiche tous les etudiants présents dans la base de données -->
 <div class="container">
     <div class="row justify-content-center">
         <table class="table table-bordered">

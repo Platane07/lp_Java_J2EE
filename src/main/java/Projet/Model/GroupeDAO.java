@@ -7,7 +7,7 @@ import java.util.List;
 
 public class GroupeDAO {
 
-    public static Groupe create(String nom, List<Module> modules) {
+    public static Groupe create(String nom, List<Module> modules, List<Etudiant> etudiants) {
 
         // Creation de l'entity manager
         EntityManager em = GestionFactory.factory.createEntityManager();
@@ -23,6 +23,9 @@ public class GroupeDAO {
 
         for(Module module : modules){
             groupe.addModule(module);
+        }
+        for(Etudiant etudiant : etudiants){
+            groupe.addEtudiant(etudiant);
         }
 
         em.merge(groupe);
