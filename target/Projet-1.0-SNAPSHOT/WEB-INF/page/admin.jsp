@@ -25,9 +25,6 @@
 
 <script type='text/javascript' src="<%=application.getContextPath()%>/Public/javascript/admin.js"
         charset="UTF-8"></script>
-<script type="text/javascript">
-    const urlDeleteEtudiant = "<%=application.getContextPath()%>/etudiant/delete";
-</script>
 
 <div class="container">
     <div class="row justify-content-center">

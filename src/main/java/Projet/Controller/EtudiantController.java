@@ -42,11 +42,14 @@ public class EtudiantController extends HttpServlet {
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
         log(nom);
-        int idGroupe = Integer.parseInt(request.getParameter("etudiantGroupe"));
 
-        Groupe groupe = GroupeDAO.getById(idGroupe);
-
-        Etudiant etudiant = EtudiantDAO.create(nom, prenom, groupe);
+        if(request.getParameter("etudiantGroupe") != null) {
+            int idGroupe = Integer.parseInt(request.getParameter("etudiantGroupe"));
+            Groupe groupe = GroupeDAO.getById(idGroupe);
+            Etudiant etudiant = EtudiantDAO.create(nom, prenom, groupe);
+        } else {
+            Etudiant etudiant = EtudiantDAO.create(nom, prenom, null);
+        }
 
         ServletContext sc = getServletContext();
         System.out.println(sc.getContextPath());

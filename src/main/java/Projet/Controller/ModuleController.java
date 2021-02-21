@@ -90,7 +90,7 @@ public class ModuleController extends HttpServlet {
         int idModule = Integer.parseInt(request.getParameter("idModule"));
         int idGroupe = Integer.parseInt(request.getParameter("idGroupe"));
 
-        log("delete");
+        log("delete" + idModule);
 
         ModuleDAO.deleteGroupe(idModule, idGroupe);
 
@@ -110,7 +110,7 @@ public class ModuleController extends HttpServlet {
             ModuleDAO.addGroupe(idGroupe, idModule);
         }
 
-        response.sendRedirect(request.getContextPath() + "/admin/groupe");
+        response.sendRedirect(request.getContextPath() + "/admin/module");
 
     }
 

@@ -13,13 +13,13 @@
 
 <script type="text/javascript">
     const urlDeleteGroupeOfModule = "<%=application.getContextPath()%>/module/deleteGroupe";
-    const urlDeleteModule = "<%=application.getContextPath()%>/module/deleteModule";
+    const urlDeleteModule = "<%=application.getContextPath()%>/module/delete";
 </script>
 
 <%  List<Groupe> groupes = (List<Groupe>) request.getAttribute("groupes");
     List<Module> modules = (List<Module>) request.getAttribute("modules");%>
 
-<table class="table table-striped table-dark">
+<table class="table table-striped table-dark table-bordered">
     <h1>LISTE DES MODULES </h1>
     <thead>
     <tr>
@@ -43,13 +43,13 @@
             <table class="table table-striped table-dark table-bordered">
                 <% for(Groupe groupe : module.getGroupes()) { %>
                 <tr>
-                    <td><%=module.getNom()%></td>
+                    <td><%=groupe.getNom()%></td>
                     <td><button onClick="deleteGroupeOfModule(<%=groupe.getId()%>, <%=module.getId()%>, this)">supprimer</button></td>
                 </tr>
                 <% } %>
                 <tr>
 
-                    <form method="post" name="addGroupeInModule" action="<%=application.getContextPath()%>/groupe/addModule">
+                    <form method="post" name="addGroupeInModule" action="<%=application.getContextPath()%>/module/addGroupe">
                         <td>
                             <select name="groupe">
                                 <%
@@ -73,14 +73,7 @@
         <th scope="row">Nouveau :</th>
         <form method="post" action="<%= application.getContextPath()%>/module/create">
             <td><input type="text" name="nomModule" placeholder="Nom du module" autocomplete="off" required/></td>
-            <td><select name="groupe" class="form-select" multiple>
-                <% for(Groupe groupe: groupes) {%>
-                <option value="<%=groupe.getId()%>" onClick="populateSelect(this)"><%=groupe.getNom()%></option>
-                <% } %>
-            </select>
-                <select name="groupesAdded" multiple>
-                </select>
-            </td>
+            <td><select name="groupe" class="form-select" multiple><% for(Groupe groupe: groupes) {%><option value="<%=groupe.getId()%>" onClick="populateSelect(this)"><%=groupe.getNom()%></option><% } %></select><select name="groupesAdded" multiple></select></td>
             <td><input type="submit" value="Ajouter"/></td>
         </form>
     </tr>

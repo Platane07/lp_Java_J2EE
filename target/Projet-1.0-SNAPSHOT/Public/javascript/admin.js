@@ -4,7 +4,7 @@ function populateSelect(el){
 
     let addSelect = el.parentNode.parentNode.lastChild;
 
-    console.log(addSelect.parentNode);
+    console.log(addSelect);
 
     var option = document.createElement("option");
     option.value = id;

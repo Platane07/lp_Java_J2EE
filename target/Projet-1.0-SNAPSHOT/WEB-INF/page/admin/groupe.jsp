@@ -117,14 +117,7 @@
                 <th scope="row">Nouveau :</th>
                 <form method="post" name="addGroupe" action="<%= application.getContextPath()%>/groupe/create">
                     <td><input type="text" name="nomGroupe" placeholder="Nom du groupe" autocomplete="off" required/></td>
-                    <td><select name="modules" class="form-select" multiple>
-                        <% for(Module module: modules) {%>
-                        <option value="<%=module.getId()%>" onClick="populateSelect(this)"><%= module.getNom()%></option>
-                        <% } %>
-                    </select>
-                        <select name="modulesAdded" multiple>
-                        </select>
-                    </td>
+                    <td><select name="modules" class="form-select" multiple><% for(Module module: modules) {%><option value="<%=module.getId()%>" onClick="populateSelect(this)"><%= module.getNom()%></option><% } %></select><select name="modulesAdded" multiple></select></td>
                     <td><input type="submit" value="Ajouter"/></td>
                 </form>
             </tr>

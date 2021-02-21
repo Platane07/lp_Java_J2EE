@@ -28,7 +28,7 @@
 
             <!-- Propriétés propre à EclipseLink -->
             <!-- EclipseLink should create the database schema automatically -->
-            <property name="eclipselink.ddl-generation" value="create-tables"/>
+            <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
             <!-- Disable EclipseLink cache - certains enregistrement n'était pas mis à jour en BD -->
             <property name="eclipselink.cache.shared.default" value="false"/>
             <property name="eclipselink.cache.type.default" value="NONE"/>

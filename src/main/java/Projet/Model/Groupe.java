@@ -60,6 +60,11 @@ public class Groupe implements Serializable {
         this.etudiants = etudiants;
     }
 
+    public void addEtudiant(Etudiant etudiant){
+        this.etudiants.add(etudiant);
+        etudiant.setGroupe(this);
+    }
+
     public void addModule(Module module) {
 			this.modules.add(module);
 			module.getGroupes().add(this);
@@ -71,6 +76,7 @@ public class Groupe implements Serializable {
     }
     public void removeEtudiant(Etudiant etudiant){
         this.etudiants.remove(etudiant);
+        etudiant.setGroupe(null);
     }
 
 

@@ -44,6 +44,9 @@ public class GroupeController extends HttpServlet {
         if (action.equals("/addModule")) {
             doAddModule(request, response);
         }
+        if (action.equals("/addEtudiant")) {
+            doAddEtudiant(request, response);
+        }
     }
 
     private void doCreateGroupe(HttpServletRequest request,
@@ -126,6 +129,24 @@ public class GroupeController extends HttpServlet {
             log("delete");
 
             GroupeDAO.addModule(idModule, idGroupe);
+        }
+
+        response.sendRedirect(request.getContextPath() + "/admin/groupe");
+
+    }
+
+    private void doAddEtudiant(HttpServletRequest request,
+                             HttpServletResponse response) throws ServletException, IOException {
+
+
+        if (request.getParameter("etudiant") != null) {
+            int idEtudiant = Integer.parseInt(request.getParameter("etudiant"));
+
+            int idGroupe = Integer.parseInt(request.getParameter("groupe"));
+
+            log("delete");
+
+            GroupeDAO.addEtudiant(idEtudiant, idGroupe);
         }
 
         response.sendRedirect(request.getContextPath() + "/admin/groupe");

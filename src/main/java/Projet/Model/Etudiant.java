@@ -22,7 +22,8 @@ public class Etudiant implements Serializable {
 
 	private int nbAbsences;
 
-	@ManyToOne
+	@ManyToOne(optional = true, fetch = FetchType.LAZY)
+	@JoinColumn(columnDefinition = "integer", name="groupe_id", nullable = true)
 	private Groupe groupe;
 
 	@OneToMany(mappedBy = "etudiant" , cascade = CascadeType.ALL, orphanRemoval = true)

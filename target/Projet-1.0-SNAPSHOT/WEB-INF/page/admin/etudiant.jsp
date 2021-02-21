@@ -39,7 +39,10 @@
                 <td><%=etudiant.getId()%></td>
                 <td><%=etudiant.getNom()%></td>
                 <td><%=etudiant.getPrenom()%></td>
-                <td><%=etudiant.getGroupe().getNom()%></td>
+                <td><% if (etudiant.getGroupe() != null) { %>
+                    <%=etudiant.getGroupe().getNom()%>
+                    <%}%>
+                </td>
                 <td><button onClick="deleteEtudiant(<%=etudiant.getId()%>, this)">supprimer</button></td>
             </tr>
             <% } %>
