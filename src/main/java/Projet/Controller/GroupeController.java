@@ -1,28 +1,24 @@
 package Projet.Controller;
 
-import javax.mvc.View;
-import javax.servlet.RequestDispatcher;
+
+import Projet.Model.Module;
+import Projet.Model.*;
+import com.google.gson.Gson;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
-
-import Projet.Model.*;
-import Projet.Model.Module;
-import com.google.gson.Gson;
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GroupeController extends HttpServlet {
 
-
+    public void init() throws ServletException {
+        GestionFactory.open();
+    }
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         // On récupère le path
@@ -51,8 +47,8 @@ public class GroupeController extends HttpServlet {
     }
 
     private void doCreateGroupe(HttpServletRequest request,
-                                 HttpServletResponse response) throws ServletException, IOException {
-        
+                                HttpServletResponse response) throws ServletException, IOException {
+
         try {
             if (request.getParameter("nomGroupe") != null) {
                 String nom = request.getParameter("nomGroupe");
@@ -66,8 +62,8 @@ public class GroupeController extends HttpServlet {
                         modules.add(ModuleDAO.getById(Integer.parseInt(id)));
                     }
                 }
-                if (idEtudiants != null ){
-                    for (String id : idEtudiants){
+                if (idEtudiants != null) {
+                    for (String id : idEtudiants) {
                         etudiants.add(EtudiantDAO.getById(Integer.parseInt(id)));
                     }
                 }
@@ -83,6 +79,7 @@ public class GroupeController extends HttpServlet {
         }
 
     }
+
     //Suppression d'un groupe entier à l'aide d'ajax
     private void doDeleteGroupe(HttpServletRequest request,
                                 HttpServletResponse response) throws ServletException, IOException {
@@ -95,7 +92,7 @@ public class GroupeController extends HttpServlet {
             String id = request.getParameter("id");
             GroupeDAO.delete(Integer.parseInt(id));
             response.getWriter().write(new Gson().toJson("{ id : " + id + "}"));
-        } catch(Exception e) {
+        } catch (Exception e) {
             log("erreur lors de la suppression du groupe");
             response.getWriter().write("error");
 
@@ -105,7 +102,7 @@ public class GroupeController extends HttpServlet {
 
     //Suppression d'un etudiant dans un groupe à l'aide d'ajax
     private void doDeleteEtudiant(HttpServletRequest request,
-                                HttpServletResponse response) throws ServletException, IOException {
+                                  HttpServletResponse response) throws ServletException, IOException {
 
 
         response.setContentType("application/json");
@@ -142,7 +139,7 @@ public class GroupeController extends HttpServlet {
     }
 
     private void doAddModule(HttpServletRequest request,
-                                        HttpServletResponse response) throws ServletException, IOException {
+                             HttpServletResponse response) throws ServletException, IOException {
 
 
         //Ajout d'un module dans un groupe
@@ -158,13 +155,12 @@ public class GroupeController extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/admin/groupe");
 
 
-
     }
 
     //Ajoute un étudiant dans un groupe,
     //Données récupérées : id d'un étudiant et d'un groupe
     private void doAddEtudiant(HttpServletRequest request,
-                             HttpServletResponse response) throws ServletException, IOException {
+                               HttpServletResponse response) throws ServletException, IOException {
 
         try {
             if (request.getParameter("etudiant") != null) {
@@ -182,6 +178,14 @@ public class GroupeController extends HttpServlet {
     private boolean isXMLHttpRequest(HttpServletRequest request) {
         String test = request.getHeader("x-requested-with");
         return request.getHeader("x-requested-with").equals("XMLHttpRequest");
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+
+        // Fermeture de la factory
+        GestionFactory.close();
     }
 
 

@@ -14,14 +14,12 @@
           <element id="module-output" name="Projet" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.8.6" />
-          <element id="library" level="project" name="Maven: javax.mvc:javax.mvc-api:1.0.0" />
           <element id="library" level="project" name="Maven: org.eclipse.persistence:eclipselink:2.7.7" />
           <element id="library" level="project" name="Maven: org.eclipse.persistence:jakarta.persistence:2.2.3" />
           <element id="library" level="project" name="Maven: org.eclipse.persistence:commonj.sdo:2.1.1" />
           <element id="library" level="project" name="Maven: org.xerial:sqlite-jdbc:3.32.3.2" />
-          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.23" />
-          <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.11.4" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.49" />
+          <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.8.6" />
         </element>
       </element>
       <element id="directory" name="META-INF">

@@ -1,7 +1,4 @@
-<%@ page import="Projet.Model.Etudiant" %>
-<%@ page import="java.util.HashMap" %>
-<%@ page import="static jdk.internal.org.jline.utils.AttributedStringBuilder.append" %>
-<%@ page import="java.util.List" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: jolan
   Date: 09/12/2020

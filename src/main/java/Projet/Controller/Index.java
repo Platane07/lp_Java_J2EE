@@ -1,5 +1,8 @@
 package Projet.Controller;
 
+import Projet.Model.Module;
+import Projet.Model.*;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -9,9 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
-
-import Projet.Model.*;
-import Projet.Model.Module;
 
 public class Index extends HttpServlet {
 
@@ -51,30 +51,30 @@ public class Index extends HttpServlet {
             throws IOException, ServletException {
 
         String action = request.getPathInfo();
-        if (action == null){
+        if (action == null) {
             action = "/home";
         }
 
-        if (action.equals("/home")){
+        if (action.equals("/home")) {
             doHome(request, response);
         }
 
-        if (action.equals("/admin")){
+        if (action.equals("/admin")) {
             doAdmin(request, response);
         }
 
-        if(action.equals("/listeGroupes")){
+        if (action.equals("/listeGroupes")) {
             doListeGroupes(request, response);
         }
-        if(action.equals("/groupe")){
+        if (action.equals("/groupe")) {
             doGroupe(request, response);
         }
 
-        if(action.equals("/listeEtudiants")){
+        if (action.equals("/listeEtudiants")) {
             doListeEtudiants(request, response);
         }
 
-        if(action.equals("/etudiant")){
+        if (action.equals("/etudiant")) {
             doEtudiant(request, response);
         }
 
@@ -83,7 +83,7 @@ public class Index extends HttpServlet {
     }
 
     private void doHome(HttpServletRequest request,
-                                HttpServletResponse response) throws ServletException, IOException {
+                        HttpServletResponse response) throws ServletException, IOException {
 
         request.setAttribute("content", urlHome);
         loadJSP(urlIndex, request, response);
@@ -92,7 +92,7 @@ public class Index extends HttpServlet {
     // /////////////////////// affichage de la liste des groupes
     //
     private void doListeGroupes(HttpServletRequest request,
-                           HttpServletResponse response) throws ServletException, IOException {
+                                HttpServletResponse response) throws ServletException, IOException {
         try {
             Collection<Groupe> listeGroupes = GroupeDAO.getAll();
             // Inclusion du content dans le template
@@ -132,7 +132,7 @@ public class Index extends HttpServlet {
 
 
     private void doEtudiant(HttpServletRequest request,
-                          HttpServletResponse response) throws ServletException, IOException {
+                            HttpServletResponse response) throws ServletException, IOException {
 
         try {
             if (EtudiantDAO.getById(Integer.parseInt(request.getParameter("id"))) != null) {
@@ -150,10 +150,9 @@ public class Index extends HttpServlet {
     }
 
 
-
     // Affichage de la page de la liste des étudiants
     private void doListeEtudiants(HttpServletRequest request,
-                            HttpServletResponse response) throws ServletException, IOException {
+                                  HttpServletResponse response) throws ServletException, IOException {
 
         try {
             List<Etudiant> etudiants = EtudiantDAO.getAll();
@@ -169,8 +168,7 @@ public class Index extends HttpServlet {
     }
 
     private void doAdmin(HttpServletRequest request,
-                                  HttpServletResponse response) throws ServletException, IOException {
-
+                         HttpServletResponse response) throws ServletException, IOException {
 
 
         try {
@@ -215,5 +213,13 @@ public class Index extends HttpServlet {
         System.out.println(sc.getContextPath());
         RequestDispatcher rd = sc.getRequestDispatcher(url);
         rd.forward(request, response);
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+
+        // Fermeture de la factory
+        GestionFactory.close();
     }
 }

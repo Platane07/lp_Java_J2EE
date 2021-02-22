@@ -2,8 +2,6 @@ package Projet.Model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Note implements Serializable {

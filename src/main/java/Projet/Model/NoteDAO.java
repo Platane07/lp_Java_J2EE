@@ -2,10 +2,8 @@ package Projet.Model;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import java.util.List;
 
 public class NoteDAO {
-
 
 
     public static Note update(Note note) {
@@ -70,7 +68,7 @@ public class NoteDAO {
     }
 
     //Récupération d'une note par l'id de l'étudiant et du module, étant donnée qu'une note n'a pas sa propre id
-    public static Note getByEtudiantAndModule(int idEtudiant, int idModule){
+    public static Note getByEtudiantAndModule(int idEtudiant, int idModule) {
 
         EntityManager em = GestionFactory.factory.createEntityManager();
 

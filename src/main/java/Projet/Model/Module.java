@@ -1,7 +1,6 @@
 package Projet.Model;
 
 
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ import java.util.List;
 public class Module implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
@@ -57,6 +56,7 @@ public class Module implements Serializable {
         this.groupes.remove(groupe);
         groupe.getModules().remove(this);
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

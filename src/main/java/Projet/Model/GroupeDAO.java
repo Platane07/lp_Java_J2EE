@@ -21,10 +21,10 @@ public class GroupeDAO {
 
         em.persist(groupe);
 
-        for(Module module : modules){
+        for (Module module : modules) {
             groupe.addModule(module);
         }
-        for(Etudiant etudiant : etudiants){
+        for (Etudiant etudiant : etudiants) {
             groupe.addEtudiant(etudiant);
         }
 
@@ -39,26 +39,6 @@ public class GroupeDAO {
         return groupe;
     }
 
-
-    public static int removeAll() {
-
-        // Creation de l'entity manager
-        EntityManager em = GestionFactory.factory.createEntityManager();
-
-        //
-        em.getTransaction().begin();
-
-        // RemoveAll
-        int deletedCount = em.createQuery("DELETE FROM Groupe").executeUpdate();
-
-        // Commit
-        em.getTransaction().commit();
-
-        // Close the entity manager
-        em.close();
-
-        return deletedCount;
-    }
     public static Groupe delete(int id) {
 
         // Creation de l'entity manager
@@ -79,7 +59,7 @@ public class GroupeDAO {
         return groupe;
     }
 
-    public static void deleteModule(int idModule, int idGroupe){
+    public static void deleteModule(int idModule, int idGroupe) {
 
         EntityManager em = GestionFactory.factory.createEntityManager();
         //
@@ -99,12 +79,11 @@ public class GroupeDAO {
 
     }
 
-    public static void deleteEtudiant(int idEtudiant, int idGroupe){
+    public static void deleteEtudiant(int idEtudiant, int idGroupe) {
 
         EntityManager em = GestionFactory.factory.createEntityManager();
         //
         em.getTransaction().begin();
-
 
 
         //tentative de suppression dun etudiant dans un groupe, l'étudiant existe toujours hors du groupe, il pourra être assigné à un autre groupe
@@ -126,7 +105,7 @@ public class GroupeDAO {
 
     }
 
-    public static void addEtudiant(int idEtudiant, int idGroupe){
+    public static void addEtudiant(int idEtudiant, int idGroupe) {
 
         EntityManager em = GestionFactory.factory.createEntityManager();
         //
@@ -146,7 +125,7 @@ public class GroupeDAO {
 
     }
 
-    public static void addModule(int idModule, int idGroupe){
+    public static void addModule(int idModule, int idGroupe) {
 
         EntityManager em = GestionFactory.factory.createEntityManager();
         //
@@ -192,31 +171,5 @@ public class GroupeDAO {
         Groupe groupe = (Groupe) q.setParameter("id", id).getSingleResult();
 
         return groupe;
-    }
-
-    public static Groupe update(Groupe groupe) {
-
-        // Creation de l'entity manager
-        EntityManager em = GestionFactory.factory.createEntityManager();
-
-        //
-        em.getTransaction().begin();
-
-        // Attacher une entité persistante (etudiant) à l’EntityManager courant pour réaliser la modification
-        em.merge(groupe);
-
-        // Commit
-        em.getTransaction().commit();
-
-        // Close the entity manager
-        em.close();
-
-        return groupe;
-    }
-
-    public static Integer getNombreEtudiants(Groupe groupe){
-        EtudiantDAO etudiantDAO = new EtudiantDAO();
-        int nombreEtudiants = etudiantDAO.retrieveByGroupe(groupe).size();
-        return nombreEtudiants;
     }
 }

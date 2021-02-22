@@ -1,5 +1,6 @@
 package Projet.Controller;
 
+import Projet.Model.*;
 import Projet.Model.Note;
 import Projet.Model.NoteDAO;
 import com.google.gson.Gson;
@@ -9,10 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class NoteController extends HttpServlet {
 
+
+    public void init() throws ServletException {
+        GestionFactory.open();
+    }
     // POST
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
@@ -29,7 +33,7 @@ public class NoteController extends HttpServlet {
             if (action.equals("/createNote")) {
                 doCreateNote(request, response);
             }
-            if (action.equals("/deleteNote")){
+            if (action.equals("/deleteNote")) {
                 doDeleteNote(request, response);
             }
 
@@ -53,14 +57,14 @@ public class NoteController extends HttpServlet {
             int idEtudiant = Integer.parseInt(request.getParameter("idEtudiant"));
             float value = Float.parseFloat(request.getParameter("value"));
 
-            if(value <= 20 && value >= 0) {
+            if (value <= 20 && value >= 0) {
                 Note note = NoteDAO.getByEtudiantAndModule(idEtudiant, idModule);
                 note.setValeur(value);
                 NoteDAO.update(note);
                 response.getWriter().write(new Gson().toJson("{ value : " + value + "}"));
             }
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             log("erreur lors de la modification de la note");
             response.getWriter().write("erreur");
         }
@@ -74,7 +78,7 @@ public class NoteController extends HttpServlet {
             int idEtudiant = Integer.parseInt(request.getParameter("idEtudiant"));
             float value = Float.parseFloat(request.getParameter("value"));
 
-            if(value <= 20 && value >= 0) {
+            if (value <= 20 && value >= 0) {
                 Note note = NoteDAO.create(value, idEtudiant, idModule);
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
@@ -98,7 +102,7 @@ public class NoteController extends HttpServlet {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(new Gson().toJson("{ value : success }"));
-        } catch (Exception e ) {
+        } catch (Exception e) {
             log("erreur lors de la suppression de la note");
         }
     }
@@ -108,6 +112,14 @@ public class NoteController extends HttpServlet {
     private boolean isXMLHttpRequest(HttpServletRequest request) {
         String test = request.getHeader("x-requested-with");
         return request.getHeader("x-requested-with").equals("XMLHttpRequest");
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+
+        // Fermeture de la factory
+        GestionFactory.close();
     }
 
 }

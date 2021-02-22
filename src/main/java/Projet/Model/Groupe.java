@@ -15,13 +15,14 @@ public class Groupe implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(unique = false, nullable = false)
     private String nom;
 
-    @OneToMany(mappedBy = "groupe", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})    // LAZY = fetch when needed, EAGER = fetch immediately
+    @OneToMany(mappedBy = "groupe", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    // LAZY = fetch when needed, EAGER = fetch immediately
     private List<Etudiant> etudiants;
 
     @ManyToMany(mappedBy = "groupes", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -52,29 +53,30 @@ public class Groupe implements Serializable {
     }
 
 
-	public List<Module> getModules() {
-		return modules;
-	}
+    public List<Module> getModules() {
+        return modules;
+    }
 
     public void setEtudiants(List<Etudiant> etudiants) {
         this.etudiants = etudiants;
     }
 
-    public void addEtudiant(Etudiant etudiant){
+    public void addEtudiant(Etudiant etudiant) {
         this.etudiants.add(etudiant);
         etudiant.setGroupe(this);
     }
 
     public void addModule(Module module) {
-			this.modules.add(module);
-			module.getGroupes().add(this);
-	}
+        this.modules.add(module);
+        module.getGroupes().add(this);
+    }
 
-	public void removeModule(Module module){
+    public void removeModule(Module module) {
         this.modules.remove(module);
         module.getGroupes().remove(this);
     }
-    public void removeEtudiant(Etudiant etudiant){
+
+    public void removeEtudiant(Etudiant etudiant) {
         this.etudiants.remove(etudiant);
         etudiant.setGroupe(null);
     }

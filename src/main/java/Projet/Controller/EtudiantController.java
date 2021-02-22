@@ -1,26 +1,20 @@
 package Projet.Controller;
 
-import javax.mvc.View;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
-
 import Projet.Model.*;
-import Projet.Model.Module;
 import com.google.gson.Gson;
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
+
 
 public class EtudiantController extends HttpServlet {
+
+    public void init() throws ServletException {
+        GestionFactory.open();
+    }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
@@ -38,7 +32,7 @@ public class EtudiantController extends HttpServlet {
     }
 
     private void doCreateEtudiant(HttpServletRequest request,
-                                HttpServletResponse response) throws ServletException, IOException {
+                                  HttpServletResponse response) throws ServletException, IOException {
 
         try {
             String nom = request.getParameter("nom");
@@ -58,7 +52,7 @@ public class EtudiantController extends HttpServlet {
     }
 
     private void doDeleteEtudiant(HttpServletRequest request,
-                                HttpServletResponse response) throws ServletException, IOException {
+                                  HttpServletResponse response) throws ServletException, IOException {
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -75,6 +69,14 @@ public class EtudiantController extends HttpServlet {
     private boolean isXMLHttpRequest(HttpServletRequest request) {
         String test = request.getHeader("x-requested-with");
         return request.getHeader("x-requested-with").equals("XMLHttpRequest");
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+
+        // Fermeture de la factory
+        GestionFactory.close();
     }
 
 

@@ -1,13 +1,7 @@
 package Projet.Model;
 
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
-
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 public class AbsenceDAO {
 

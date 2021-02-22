@@ -1,6 +1,5 @@
 package Projet.Controller;
 
-import javax.mvc.View;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -23,6 +22,10 @@ import com.google.gson.Gson;
 import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 public class AbsenceController extends HttpServlet {
+
+    public void init() throws ServletException {
+        GestionFactory.open();
+    }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
@@ -144,9 +147,17 @@ public class AbsenceController extends HttpServlet {
     public static Integer tryParse(String text) {
         try {
             return Integer.parseInt(text);
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             return null;
         }
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+
+        // Fermeture de la factory
+        GestionFactory.close();
     }
 
 }

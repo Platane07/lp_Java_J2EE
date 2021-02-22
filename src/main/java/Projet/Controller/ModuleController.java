@@ -1,30 +1,23 @@
 package Projet.Controller;
 
-import javax.mvc.View;
-import javax.servlet.RequestDispatcher;
+import Projet.Model.*;
+import Projet.Model.Module;
+import com.google.gson.Gson;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
-
-import Projet.Model.*;
-import Projet.Model.Module;
-import com.google.gson.Gson;
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 public class ModuleController extends HttpServlet {
 
+    public void init() throws ServletException {
+        GestionFactory.open();
+    }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
@@ -82,7 +75,7 @@ public class ModuleController extends HttpServlet {
             Module module = ModuleDAO.delete(Integer.parseInt(id));
             ServletContext sc = getServletContext();
             System.out.println(sc.getContextPath());
-            response.getWriter().write(new Gson().toJson("{ id : "+id+"}"));
+            response.getWriter().write(new Gson().toJson("{ id : " + id + "}"));
         } catch (Exception e) {
             log("erreur lors de la suppression du module");
             response.getWriter().write("erreur");
@@ -128,6 +121,14 @@ public class ModuleController extends HttpServlet {
     private boolean isXMLHttpRequest(HttpServletRequest request) {
         String test = request.getHeader("x-requested-with");
         return request.getHeader("x-requested-with").equals("XMLHttpRequest");
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+
+        // Fermeture de la factory
+        GestionFactory.close();
     }
 
 }
